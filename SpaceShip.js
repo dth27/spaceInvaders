@@ -62,15 +62,14 @@ SpaceShip.prototype.getRadius = function () {
 
 SpaceShip.prototype.fireBullet = function() {
   if (keys[this.KEY_FIRE]){
-    var dX = +Math.sin(this.rotation);
-    var dY = -Math.cos(this.rotation);
+
     var launchDist = this.getRadius() * 1.2;
 
     var relVel = this.launchVel;
-    var relVelX =  relVel;
-    var relVelY =  relVel;
+    var relVelX = this.cx* relVel;
+    var relVelY =  this.cy*relVel;
     entityManager.fireBullet(
-      this.cx + dX * launchDist, this.cy + dY * launchDist,
+      this.cx , this.cy ,
       this.velX + relVelX, this.velY + relVelY,
       this.rotation
        );

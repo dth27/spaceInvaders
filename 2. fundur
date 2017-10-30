@@ -1,0 +1,31 @@
+2. fundur
+
+Hvað þarf að gera:
+
+Skipið - laga snúning (Diljá)
+Bullet - Pétur
+Enemies - Ragnar
+Eyða út Rocks - Sandra
+Super enemy - Sandra
+Verndarveggi - Diljá
+
+Vantar event handling:
+
+Scoring system
+Enemies firing bullets
+Death handling (reset)
+(ie. if ship is hit by enemy fire a certain amount of time)
+Enemy movement (moving from side to side, as well as gradually
+                moving closer to the ground)
+Enemy death handling (if hit, disappear)
+
+Levels! 
+
+
+Auka:
+
+at start:
+  enemies fly in and form the formation in a super cool way
+  Main spaceship flies in into center positions
+Music
+Sound design
