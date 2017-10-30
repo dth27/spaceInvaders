@@ -8,7 +8,9 @@ Enemies - Ragnar
 Eyða út Rocks - Sandra
 Super enemy - Sandra
 Verndarveggi - Diljá
+Backgrunn - Diljá
 
+(í næstu viku, en má skoða núna)
 Vantar event handling:
 
 Scoring system
@@ -19,9 +21,10 @@ Enemy movement (moving from side to side, as well as gradually
                 moving closer to the ground)
 Enemy death handling (if hit, disappear)
 
-Levels! 
+Win handling, ie. if won -> some msg appears
+and user goes on to next level
 
-
+(juicing)
 Auka:
 
 at start:
