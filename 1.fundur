@@ -1,0 +1,33 @@
+
+index
+
+//sprite
+spaceship -diljá
+entity pétur
+entityManager - sandra
+enemies -ragnar
+Bullet - pétur
+spatialManager - diljá
+
+annað
+render
+update
+main
+keys
+global
+util
+(handleMouse)
+
+note: no urls, use local files
+
+Breakdown
+
+week 1
+plan, main characters, labor division
+
+
+week 2
+other characters, event handling,
+
+week 3
+juicing (images(sprites), background, sounds)

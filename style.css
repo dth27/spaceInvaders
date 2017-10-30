@@ -1,0 +1,36 @@
+canvas{
+
+  background-blend-mode: color-dodge;
+  background-size: cover;
+  background-attachment: inherit;
+  display: flex;
+  border: 1px solid white;
+}
+body {
+  background-color: #000;
+  font-size: 16px;
+
+  background-size: cover;
+}
+h1,h2,h3{
+  color: white;
+  text-align: center;
+  font-family:  monospace;
+
+}
+p{
+  color: white;
+  padding-left: 4rem;
+  font-family:  monospace;
+}
+.mainContainer{
+  display: flex;
+
+}
+.instructions{
+  border: 1px solid white;
+}
+a{
+  color: white;
+ text-decoration: none;
+}
