@@ -50,7 +50,7 @@ SpaceShip.prototype.update = function() {
     }
   }
 
-  this.fireBullet();
+  this.SpaceShipfireBullet();
   spatialManager.register(this);
 
 };
@@ -60,19 +60,22 @@ SpaceShip.prototype.getRadius = function () {
     return (this.sprite.width / 2) * 0.9;
 };
 
-SpaceShip.prototype.fireBullet = function() {
-  if (keys[this.KEY_FIRE]){
+SpaceShip.prototype.SpaceShipfireBullet = function() {
+  if (keys[this.KEY_FIRE]) {
 
+    var dX = +Math.sin(this.rotation);
+    var dY = -Math.cos(this.rotation);
     var launchDist = this.getRadius() * 1.2;
 
     var relVel = this.launchVel;
-    var relVelX = this.cx* relVel;
-    var relVelY =  this.cy*relVel;
+    var relVelX = dX * relVel;
+    var relVelY = dY * relVel;
+
     entityManager.fireBullet(
-      this.cx , this.cy ,
-      this.velX + relVelX, this.velY + relVelY,
-      this.rotation
-       );
+       this.cx + dX * launchDist, this.cy + dY * launchDist,
+       this.velX + relVelX, this.velY + relVelY,
+       this.rotation);
+
   }
 };
 
