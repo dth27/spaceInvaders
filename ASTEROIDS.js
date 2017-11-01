@@ -204,7 +204,7 @@ function requestPreloads() {
     var requiredImages = {
         ship   : "images/spaceship.png",
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png",
+        rock   : "images/rock.png",
         alien  : "https://media.giphy.com/media/Qz9jVV6CiRSuI/giphy.gif"
     };
 

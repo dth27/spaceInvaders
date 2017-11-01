@@ -31,16 +31,27 @@ _rocks   : [],
 _bullets : [],
 _ships   : [],
 
-_bShowRocks : false,
+_bShowRocks : true,
 
 // "PRIVATE" METHODS
 
 _generateRocks : function() {
     var i,
-        NUM_ROCKS = 4;
+        NUM_ROWS = 5,
+		NUM_COLUMNS = 12,
+		initialCX = 80,
+		initialCY = 100,
+		xInterval = 40,
+		yInterval = 40;
 
-    for (i = 0; i < NUM_ROCKS; ++i) {
-        this.generateRock();
+    for (i = 0; i < NUM_ROWS; ++i) {
+		for (var j = 0; j < NUM_COLUMNS; j++) {
+			var nextCX = initialCX + (xInterval * j);
+			var nextCY = initialCY + (yInterval * i);
+			this.generateRock({
+			cx : nextCX,
+			cy : nextCY});
+		}
     }
 },
 
