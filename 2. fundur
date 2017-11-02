@@ -13,6 +13,17 @@ Backgrunn - Diljá
 (í næstu viku, en má skoða núna)
 Vantar event handling:
 
+Virkni:
+one Bullet
+one of the enemies is powerup
+if spaceship gets powerup he can shoot as much as he wants for a specific time
+
+Levels (maybe)
+Enemies come closer and closer
+the closer, the more rockets they drop
+and the more bullets the spaceship can shoot
+
+
 Scoring system
 Enemies firing bullets
 Death handling (reset)

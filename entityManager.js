@@ -30,6 +30,7 @@ var entityManager = {
 _rocks   : [],
 _bullets : [],
 _ships   : [],
+_defence : [],
 
 _bShowRocks : false,
 
@@ -43,7 +44,13 @@ _generateRocks : function() {
         this.generateRock();
     }
 },
-
+_generateDefence : function() {
+  //var i,
+//  NUM_WALLS = 3;
+//  for (i = 0; i<NUM_WALLS; ++i){
+    this.generateDefence();
+//  }
+},
 _findNearestShip : function(posX, posY) {
     var closestShip = null,
         closestIndex = -1,
@@ -87,7 +94,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._rocks, this._bullets, this._ships];
+    this._categories = [this._rocks, this._bullets, this._ships, this._defence];
 },
 
 init: function() {
@@ -95,14 +102,15 @@ init: function() {
     //this._generateShip();
 },
 
-fireBullet: function(cx, cy, velX, velY, rotation) {
+fireBullet: function(cx, cy, vel) {
     this._bullets.push(new Bullet({
         cx   : cx,
         cy   : cy,
-        velX : velX,
-        velY : velY,
+        //velX : velX,
+        //velY : velY,
+        vel   : vel,
 
-        rotation : rotation
+        //rotation : rotation
     }));
 },
 
@@ -112,6 +120,10 @@ generateRock : function(descr) {
 
 generateShip : function(descr) {
     this._ships.push(new SpaceShip(descr));
+},
+
+generateDefence : function(descr){
+  this._defence.push(new defenceWall(descr));
 },
 
 killNearestShip : function(xPos, yPos) {

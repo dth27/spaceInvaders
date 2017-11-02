@@ -78,6 +78,21 @@ function createInitialShips() {
 
 }
 
+function createDefenceWall(){
+  entityManager.generateDefence({
+    cx : 10,
+    cy : 500
+  });
+  entityManager.generateDefence({
+    cx : 50,
+    cy : 500
+  });
+  entityManager.generateDefence({
+    cx : 100,
+    cy : 500
+  });
+}
+
 // =============
 // GATHER INPUTS
 // =============
@@ -224,6 +239,7 @@ function preloadDone() {
 
     entityManager.init();
     createInitialShips();
+    createDefenceWall();
 
     main.init();
 }

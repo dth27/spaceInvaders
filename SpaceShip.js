@@ -55,7 +55,6 @@ SpaceShip.prototype.update = function() {
 
 };
 
-
 SpaceShip.prototype.getRadius = function () {
     return (this.sprite.width / 2) * 0.9;
 };
@@ -69,21 +68,20 @@ SpaceShip.prototype.fireBullet = function() {
     var relVelX = this.cx* relVel;
     var relVelY =  this.cy*relVel;
     entityManager.fireBullet(
-      this.cx , this.cy ,
-      this.velX + relVelX, this.velY + relVelY,
-      this.rotation
+      this.cx , this.cy, relVel
        );
   }
 };
 
 SpaceShip.prototype.reset = function(){
   this.setPos(this.reset_cx, this.reset_cy);
-  this.rotation = this.reset_rotation;
+  //this.rotation = this.reset_rotation;
 
 };
 
 SpaceShip.prototype.takeBulletHit = function(){
   //handle loss of life
+
 };
 
 SpaceShip.prototype.render = function(ctx){
