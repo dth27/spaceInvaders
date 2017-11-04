@@ -63,18 +63,20 @@ SpaceShip.prototype.getRadius = function () {
 SpaceShip.prototype.SpaceShipfireBullet = function() {
   if (keys[this.KEY_FIRE]) {
 
-    var dX = +Math.sin(this.rotation);
-    var dY = -Math.cos(this.rotation);
-    var launchDist = this.getRadius() * 1.2;
+    if (entityManager._bullets.length < MAGAZINE) {
+      var dX = +Math.sin(this.rotation);
+      var dY = -Math.cos(this.rotation);
+      var launchDist = this.getRadius() * 1.2;
 
-    var relVel = this.launchVel;
-    var relVelX = dX * relVel;
-    var relVelY = dY * relVel;
+      var relVel = this.launchVel;
+      var relVelX = dX * relVel;
+      var relVelY = dY * relVel;
 
-    entityManager.fireBullet(
-       this.cx + dX * launchDist, this.cy + dY * launchDist,
-       this.velX + relVelX, this.velY + relVelY,
-       this.rotation);
+      entityManager.fireBullet(
+         this.cx + dX * launchDist, this.cy + dY * launchDist,
+         this.velX + relVelX, this.velY + relVelY,
+         this.rotation);
+    }
 
   }
 };
