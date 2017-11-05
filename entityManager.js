@@ -32,6 +32,8 @@ _bullets : [],
 _ships   : [],
 
 _bShowRocks : true,
+// Keeps track of whether aliens should turn around or not.
+_turnAliensNext : false,
 
 // "PRIVATE" METHODS
 
@@ -87,12 +89,23 @@ _forEachOf: function(aCategory, fn) {
     }
 },
 
+// Tell all the aliens it's time to turn around
+_turnAliensAround: function() {
+	this._forEachOf(this._rocks, Rock.prototype.turnAround);
+	this._turnAliensNext = false;
+},
+
 // PUBLIC METHODS
 
 // A special return value, used by other objects,
 // to request the blessed release of death!
 //
 KILL_ME_NOW : -1,
+
+// When aliens pass these X coordinates they need to
+// turn around.
+ALIEN_TURN_MAX : 580,
+ALIEN_TURN_MIN : 20,
 
 // Some things must be deferred until after initial construction
 // i.e. thing which need `this` to be defined.
@@ -151,6 +164,12 @@ toggleRocks: function() {
     this._bShowRocks = !this._bShowRocks;
 },
 
+// You guessed it, make the aliens turn around. More specifically:
+// The entity manager notes that it's time to tell the aliens to turn around.
+turnAliensNextUpdate: function() {
+	this._turnAliensNext = true;
+},
+
 update: function(du) {
 
     for (var c = 0; c < this._categories.length; ++c) {
@@ -172,6 +191,8 @@ update: function(du) {
             }
         }
     }
+	
+	if (this._turnAliensNext) this._turnAliensAround();
 
     if (this._rocks.length === 0) this._generateRocks();
 

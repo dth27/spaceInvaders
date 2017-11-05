@@ -37,6 +37,9 @@ Bullet.prototype.fireSound = new Audio(
 Bullet.prototype.zappedSound = new Audio(
     "sounds/bulletZapped.ogg");
 
+// Magazine
+var MAGAZINE = 1;
+
 // Initial, inheritable, default values
 Bullet.prototype.rotation = 0;
 Bullet.prototype.cx = 200;
@@ -55,7 +58,7 @@ Bullet.prototype.update = function (du) {
 
     if (this.cy < 6){
       return entityManager.KILL_ME_NOW;
-    } 
+    }
     this.cx += this.velX * du;
     this.cy += this.velY * du;
 

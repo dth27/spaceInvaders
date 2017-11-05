@@ -21,6 +21,9 @@ function Rock(descr) {
     //this.randomisePosition();
     //this.randomiseVelocity();
 	
+	this.velX = 1;
+	this._turnAroundNext = false;
+	
     // Default sprite and scale, if not otherwise specified
     this.sprite = this.sprite || g_sprites.rock;
     //this.scale  = this.scale  || 1;
@@ -67,9 +70,21 @@ Rock.prototype.update = function (du) {
 	
 	spatialManager.unregister(this);
 	if(this._isDeadNow) return entityManager.KILL_ME_NOW;
-
-    //this.cx += this.velX * du;
-    //this.cy += this.velY * du;
+	
+	if(this._turnAroundNext) {
+		this.velX = -this.velX;
+		this.cx += this.velX * du;
+		this.cy += 5;
+		this._turnAroundNext = false;
+	}
+	else {
+		this.cx += this.velX * du;
+		if(this.cx > entityManager.ALIEN_TURN_MAX || 
+		   this.cx < entityManager.ALIEN_TURN_MIN) {
+			entityManager.turnAliensNextUpdate();
+		}
+	}
+	
 
     /*this.rotation += 1 * this.velRot;
     this.rotation = util.wrapRange(this.rotation,
@@ -108,6 +123,10 @@ Rock.prototype.takeBulletHit = function () {
 
 // For when we implement shooting aliens
 Rock.prototype.shootBullet = function () {
+}
+
+Rock.prototype.turnAround = function () {
+	this._turnAroundNext = true;
 }
 
 /*Rock.prototype._spawnFragment = function () {
