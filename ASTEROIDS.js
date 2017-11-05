@@ -78,21 +78,6 @@ function createInitialShips() {
 
 }
 
-function createDefenceWall(){
-  entityManager.generateDefence({
-    cx : 10,
-    cy : 500
-  });
-  entityManager.generateDefence({
-    cx : 50,
-    cy : 500
-  });
-  entityManager.generateDefence({
-    cx : 100,
-    cy : 500
-  });
-}
-
 // =============
 // GATHER INPUTS
 // =============
@@ -219,7 +204,7 @@ function requestPreloads() {
     var requiredImages = {
         ship   : "images/spaceship.png",
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png",
+        rock   : "images/rock.png",
         alien  : "https://media.giphy.com/media/Qz9jVV6CiRSuI/giphy.gif"
     };
 
@@ -239,7 +224,6 @@ function preloadDone() {
 
     entityManager.init();
     createInitialShips();
-    createDefenceWall();
 
     main.init();
 }

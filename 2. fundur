@@ -8,21 +8,8 @@ Enemies - Ragnar
 Eyða út Rocks - Sandra
 Super enemy - Sandra
 Verndarveggi - Diljá
-Backgrunn - Diljá
 
-(í næstu viku, en má skoða núna)
 Vantar event handling:
-
-Virkni:
-one Bullet
-one of the enemies is powerup
-if spaceship gets powerup he can shoot as much as he wants for a specific time
-
-Levels (maybe)
-Enemies come closer and closer
-the closer, the more rockets they drop
-and the more bullets the spaceship can shoot
-
 
 Scoring system
 Enemies firing bullets
@@ -32,10 +19,9 @@ Enemy movement (moving from side to side, as well as gradually
                 moving closer to the ground)
 Enemy death handling (if hit, disappear)
 
-Win handling, ie. if won -> some msg appears
-and user goes on to next level
+Levels! 
 
-(juicing)
+
 Auka:
 
 at start:
