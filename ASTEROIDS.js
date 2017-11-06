@@ -66,6 +66,21 @@ function updateScoreBoard(ctx) {
 }
 
 // ====================
+// Victory
+// ====================
+function updateVictory(){
+  if (g_victory) {
+    ctx.font = "Bold 20px Arial";
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.textAlign = "center";
+    ctx.fillText("Victory",ctx.canvas.width-300, ctx.canvas.height-300);
+    ctx.fillText("Press Y to continue",ctx.canvas.width-300, ctx.canvas.height-280);
+    ctx.closePath;
+  }
+}
+
+// ====================
 // CREATE INITIAL SHIPS
 // ====================
 
@@ -113,7 +128,7 @@ function updateSimulation(du) {
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
-
+var g_victory = false;
 var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
@@ -123,6 +138,7 @@ var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
+var KEY_YES     = keyCode('Y')
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -146,6 +162,11 @@ function processDiagnostics() {
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
     if (eatKey(KEY_HALT)) entityManager.haltShips();
+
+    if (eatKey(KEY_YES)) {
+        entityManager._generateRocks();
+        g_victory = false;
+    }
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
 
@@ -189,6 +210,7 @@ function renderSimulation(ctx) {
 
     entityManager.render(ctx);
     updateScoreBoard(ctx);
+    updateVictory(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 

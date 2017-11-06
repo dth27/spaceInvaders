@@ -206,7 +206,8 @@ update: function(du) {
 
 	if (this._turnAliensNext) this._turnAliensAround();
 
-    if (this._rocks.length === 0) this._generateRocks();
+  if (this._rocks.length === 0) g_victory = true;
+
 
 },
 

@@ -38,7 +38,7 @@ Bullet.prototype.zappedSound = new Audio(
     "sounds/bulletZapped.ogg");
 
 // Magazine
-var MAGAZINE = 1;
+var MAGAZINE = 3;
 var ALIENMAGAZINE = 5;
 var TEMPALIENMAGAZINE = 1;
 // Initial, inheritable, default values
