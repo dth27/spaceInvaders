@@ -144,7 +144,7 @@ Rock.prototype.fireAlienBullet = function () {
     return;
   }
 
-  if (entityManager._alienbullets.length < ALIENMAGAZINE) {
+  if (entityManager._alienbullets.length < TEMPALIENMAGAZINE) {
     var dX = +Math.sin(Math.PI);
     var dY = -Math.cos(Math.PI);
     var launchDist = this.getRadius() * 1.2;

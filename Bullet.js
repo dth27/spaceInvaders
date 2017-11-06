@@ -40,7 +40,7 @@ Bullet.prototype.zappedSound = new Audio(
 // Magazine
 var MAGAZINE = 1;
 var ALIENMAGAZINE = 5;
-
+var TEMPALIENMAGAZINE = 1;
 // Initial, inheritable, default values
 Bullet.prototype.rotation = 0;
 Bullet.prototype.cx = 200;
@@ -60,6 +60,9 @@ Bullet.prototype.update = function (du) {
     if (this.cy < 6){
       return entityManager.KILL_ME_NOW;
     }
+    if (this.cy > canvas.height) {
+      return entityManager.KILL_ME_NOW;
+    }
     this.cx += this.velX * du;
     this.cy += this.velY * du;
 
@@ -67,7 +70,6 @@ Bullet.prototype.update = function (du) {
     this.rotation = util.wrapRange(this.rotation,
                                    0, consts.FULL_CIRCLE);
 
-    this.wrapPosition();
 
     // TODO? NO, ACTUALLY, I JUST DID THIS BIT FOR YOU! :-)
     //

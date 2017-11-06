@@ -63,7 +63,9 @@ SpaceShip.prototype.getRadius = function () {
 
 SpaceShip.prototype.SpaceShipfireBullet = function() {
   if (keys[this.KEY_FIRE]) {
-
+    if (TEMPALIENMAGAZINE <= ALIENMAGAZINE) {
+      TEMPALIENMAGAZINE++;
+    }
     if (entityManager._bullets.length < MAGAZINE) {
       var dX = +Math.sin(this.rotation);
       var dY = -Math.cos(this.rotation);
@@ -89,7 +91,7 @@ SpaceShip.prototype.reset = function(){
 };
 
 SpaceShip.prototype.takeBulletHit = function(){
-  //handle loss of life
+  this.reset();
 };
 
 SpaceShip.prototype.render = function(ctx){
