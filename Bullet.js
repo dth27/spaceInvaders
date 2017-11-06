@@ -39,6 +39,7 @@ Bullet.prototype.zappedSound = new Audio(
 
 // Magazine
 var MAGAZINE = 1;
+var ALIENMAGAZINE = 1;
 
 // Initial, inheritable, default values
 Bullet.prototype.rotation = 0;
@@ -46,7 +47,7 @@ Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
 Bullet.prototype.velX = 1;
 Bullet.prototype.velY = 1;
-
+Bullet.prototype.friendOrFoe = true;
 // Convert times from milliseconds to "nominal" time units.
 Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
@@ -73,15 +74,18 @@ Bullet.prototype.update = function (du) {
     // Handle collisions
     //
     var hitEntity = this.findHitEntity();
+
+
     if (hitEntity) {
+      if (hitEntity.friendOrFoe != this.friendOrFoe) {
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
         return entityManager.KILL_ME_NOW;
+      }
     }
 
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
-
 };
 
 Bullet.prototype.getRadius = function () {

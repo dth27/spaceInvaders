@@ -30,6 +30,7 @@ var entityManager = {
 _rocks   : [],
 _bullets : [],
 _ships   : [],
+_alienbullets : [],
 
 _bShowRocks : true,
 // Keeps track of whether aliens should turn around or not.
@@ -111,7 +112,7 @@ ALIEN_TURN_MIN : 20,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._rocks, this._bullets, this._ships];
+    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets];
 },
 
 init: function() {
@@ -119,13 +120,24 @@ init: function() {
     //this._generateShip();
 },
 
-fireBullet: function(cx, cy, velX, velY, rotation) {
+fireBullet: function(cx, cy, velX, velY, rotation, forf) {
     this._bullets.push(new Bullet({
         cx   : cx,
         cy   : cy,
         velX : velX,
         velY : velY,
+        friendOrFoe : forf,
+        rotation : rotation
+    }));
+},
 
+fireEnemyBullet: function(cx, cy, velX, velY, rotation, forf) {
+    this._alienbullets.push(new Bullet({
+        cx   : cx,
+        cy   : cy,
+        velX : velX,
+        velY : velY,
+        friendOrFoe : forf,
         rotation : rotation
     }));
 },
@@ -191,7 +203,7 @@ update: function(du) {
             }
         }
     }
-	
+
 	if (this._turnAliensNext) this._turnAliensAround();
 
     if (this._rocks.length === 0) this._generateRocks();

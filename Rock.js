@@ -20,10 +20,10 @@ function Rock(descr) {
 
     //this.randomisePosition();
     //this.randomiseVelocity();
-	
+
 	this.velX = 1;
 	this._turnAroundNext = false;
-	
+
     // Default sprite and scale, if not otherwise specified
     this.sprite = this.sprite || g_sprites.rock;
     //this.scale  = this.scale  || 1;
@@ -39,6 +39,16 @@ function Rock(descr) {
 };
 
 Rock.prototype = new Entity();
+
+Rock.prototype.KEY_FIRE   = ' '.charCodeAt(0);
+Rock.prototype.rotation = 0;
+Rock.prototype.cx = 100;
+Rock.prototype.cy = 200;
+Rock.prototype.velX = 0;
+Rock.prototype.velY = 0;
+Rock.prototype.launchVel = 2;
+Rock.prototype.friendOrFoe = true;
+
 
 /*Rock.prototype.randomisePosition = function () {
     // Rock randomisation defaults (if nothing otherwise specified)
@@ -67,10 +77,11 @@ Rock.prototype = new Entity();
 Rock.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
-	
+
 	spatialManager.unregister(this);
+  this.fireAlienBullet();
 	if(this._isDeadNow) return entityManager.KILL_ME_NOW;
-	
+
 	if(this._turnAroundNext) {
 		this.velX = -this.velX;
 		this.cx += this.velX * du;
@@ -79,21 +90,21 @@ Rock.prototype.update = function (du) {
 	}
 	else {
 		this.cx += this.velX * du;
-		if(this.cx > entityManager.ALIEN_TURN_MAX || 
+		if(this.cx > entityManager.ALIEN_TURN_MAX ||
 		   this.cx < entityManager.ALIEN_TURN_MIN) {
 			entityManager.turnAliensNextUpdate();
 		}
 	}
-	
+
 
     /*this.rotation += 1 * this.velRot;
     this.rotation = util.wrapRange(this.rotation,
                                    0, consts.FULL_CIRCLE);
 
     this.wrapPosition();*/
-    
+
     // TODO: YOUR STUFF HERE! --- (Re-)Register
-	
+
 	spatialManager.register(this);
 
 };
@@ -109,21 +120,45 @@ Rock.prototype.evaporateSound = new Audio(
   "sounds/rockEvaporate.ogg");
 
 Rock.prototype.takeBulletHit = function () {
+
     this.kill();
-    
+
     /* if (this.scale > 0.25) {
         this._spawnFragment();
         this._spawnFragment();
-        
+
         this.splitSound.play();
     } else { */
     this.evaporateSound.play();
-    //} 
+    //}
 };
 
 // For when we implement shooting aliens
-Rock.prototype.shootBullet = function () {
-}
+Rock.prototype.fireAlienBullet = function () {
+  if (keys[this.KEY_FIRE]) {
+    var enemy = getFiringEnemy();
+    if (enemy == null) {
+      return;
+    }
+
+    if (entityManager._alienbullets.length < ALIENMAGAZINE) {
+      var dX = +Math.sin(Math.PI);
+      var dY = -Math.cos(Math.PI);
+      var launchDist = this.getRadius() * 1.2;
+
+      var relVel = this.launchVel;
+      var relVelX = dX * relVel;
+      var relVelY = dY * relVel;
+
+      entityManager.fireEnemyBullet(
+         enemy.cx + dX * launchDist, enemy.cy + dY * launchDist,
+         relVelX, relVelY,
+         enemy.rotation, true);
+
+    }
+
+  }
+};
 
 Rock.prototype.turnAround = function () {
 	this._turnAroundNext = true;
@@ -146,3 +181,8 @@ Rock.prototype.render = function (ctx) {
     );
 };
 
+
+function getFiringEnemy(){
+  // næst handle undefined enemys
+  return  entityManager._rocks[Math.floor((Math.random() * entityManager._rocks.length) + 0)];
+}

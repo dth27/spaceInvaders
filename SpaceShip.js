@@ -29,6 +29,7 @@ SpaceShip.prototype.cy = 200;
 SpaceShip.prototype.velX = 0;
 SpaceShip.prototype.velY = 0;
 SpaceShip.prototype.launchVel = 2;
+SpaceShip.prototype.friendOrFoe = false;
 
 
 SpaceShip.prototype.update = function() {
@@ -75,7 +76,7 @@ SpaceShip.prototype.SpaceShipfireBullet = function() {
       entityManager.fireBullet(
          this.cx + dX * launchDist, this.cy + dY * launchDist,
          this.velX + relVelX, this.velY + relVelY,
-         this.rotation);
+         this.rotation,false);
     }
 
   }
