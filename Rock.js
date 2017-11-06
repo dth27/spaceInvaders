@@ -4,6 +4,8 @@
 
 "use strict";
 
+var shootingRate = 10;
+
 /* jshint browser: true, devel: true, globalstrict: true */
 
 /*
@@ -79,8 +81,10 @@ Rock.prototype.update = function (du) {
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
 
 	spatialManager.unregister(this);
+
   this.fireAlienBullet();
-	if(this._isDeadNow) return entityManager.KILL_ME_NOW;
+
+  if(this._isDeadNow) return entityManager.KILL_ME_NOW;
 
 	if(this._turnAroundNext) {
 		this.velX = -this.velX;
@@ -135,27 +139,24 @@ Rock.prototype.takeBulletHit = function () {
 
 // For when we implement shooting aliens
 Rock.prototype.fireAlienBullet = function () {
-  if (keys[this.KEY_FIRE]) {
-    var enemy = getFiringEnemy();
-    if (enemy == null) {
-      return;
-    }
+  var enemy = getFiringEnemy();
+  if (enemy == null) {
+    return;
+  }
 
-    if (entityManager._alienbullets.length < ALIENMAGAZINE) {
-      var dX = +Math.sin(Math.PI);
-      var dY = -Math.cos(Math.PI);
-      var launchDist = this.getRadius() * 1.2;
+  if (entityManager._alienbullets.length < ALIENMAGAZINE) {
+    var dX = +Math.sin(Math.PI);
+    var dY = -Math.cos(Math.PI);
+    var launchDist = this.getRadius() * 1.2;
 
-      var relVel = this.launchVel;
-      var relVelX = dX * relVel;
-      var relVelY = dY * relVel;
+    var relVel = this.launchVel;
+    var relVelX = dX * relVel;
+    var relVelY = dY * relVel;
 
-      entityManager.fireEnemyBullet(
-         enemy.cx + dX * launchDist, enemy.cy + dY * launchDist,
-         relVelX, relVelY,
-         enemy.rotation, true);
-
-    }
+    entityManager.fireEnemyBullet(
+       enemy.cx + dX * launchDist, enemy.cy + dY * launchDist,
+       relVelX, relVelY,
+       enemy.rotation, true);
 
   }
 };

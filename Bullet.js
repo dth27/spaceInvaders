@@ -39,7 +39,7 @@ Bullet.prototype.zappedSound = new Audio(
 
 // Magazine
 var MAGAZINE = 1;
-var ALIENMAGAZINE = 1;
+var ALIENMAGAZINE = 10;
 
 // Initial, inheritable, default values
 Bullet.prototype.rotation = 0;
