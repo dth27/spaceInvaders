@@ -121,7 +121,7 @@ init: function() {
     this.generateEnemyShip({
         sprite: g_sprites.enemyship
     });
-    
+
     //this._generateShip();
 },
 
