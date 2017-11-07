@@ -170,7 +170,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_HALT)) entityManager.haltShips();
 
-    if (eatKey(KEY_YES)) {
+    if (eatKey(KEY_YES) && g_victory) {
         entityManager._generateRocks();
         g_victory = false;
     }
