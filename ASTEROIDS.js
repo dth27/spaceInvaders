@@ -61,7 +61,7 @@ function updateScoreBoard(ctx) {
   ctx.fillStyle = "white";
   ctx.beginPath();
   ctx.textAlign = "center";
-  ctx.fillText("Score: " + Math.round(score*Math.PI),ctx.canvas.width-70, ctx.canvas.height-20);
+  ctx.fillText("Score: " + score, ctx.canvas.width-70, ctx.canvas.height-20);
   ctx.closePath();
 }
 
@@ -137,6 +137,9 @@ var g_renderSpatialDebug = false;
 var g_enemyShip_goLeft = true;
 var g_enemyShip_goRight = false;
 var g_enemyShip_no = 0;
+
+var g_score_enemies = 10;
+var g_score_enemyship = 100;
 
 var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');

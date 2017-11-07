@@ -134,6 +134,9 @@ Rock.prototype.takeBulletHit = function () {
         this.splitSound.play();
     } else { */
     this.evaporateSound.play();
+
+    //update score
+    score += g_score_enemies;
     //}
 };
 

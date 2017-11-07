@@ -29,7 +29,7 @@ EnemyShip.prototype.cx = 1300;
 EnemyShip.prototype.cy = 50;
 EnemyShip.prototype.velX = 1;
 EnemyShip.prototype.velY = 0;
-EnemyShip.prototype.launchVel = 1;
+EnemyShip.prototype.launchVel = 0;
 
 
 
