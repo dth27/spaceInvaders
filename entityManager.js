@@ -117,6 +117,11 @@ deferredSetup : function () {
 
 init: function() {
     this._generateRocks();
+
+    this.generateEnemyShip({
+        sprite: g_sprites.enemyship
+    });
+    
     //this._generateShip();
 },
 
@@ -144,6 +149,10 @@ fireEnemyBullet: function(cx, cy, velX, velY, rotation, forf) {
 
 generateRock : function(descr) {
     this._rocks.push(new Rock(descr));
+},
+
+generateEnemyShip: function(descr) {
+    this._ships.push(new EnemyShip(descr));
 },
 
 generateShip : function(descr) {
