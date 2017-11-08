@@ -31,6 +31,8 @@ _rocks   : [],
 _bullets : [],
 _ships   : [],
 _alienbullets : [],
+_walls   : [],
+
 
 _bShowRocks : true,
 // Keeps track of whether aliens should turn around or not.
@@ -64,6 +66,34 @@ _generateRocks : function() {
 					cy : nextCY});
 		}
     }
+},
+_generateWalls : function() {
+  var i,
+      NUM_ROWS = 3,
+  NUM_COLUMNS = 3,
+  initialCX = 15,
+  initialCY = 400,
+  xInterval = 30,
+  yInterval = 20;
+
+  for (i = 0; i < NUM_ROWS; ++i) {
+  for (var j = 0; j < NUM_COLUMNS; j++) {
+    var nextCX = initialCX + (xInterval * j);
+    var nextCY = initialCY + (yInterval * i);
+    this.generateWalls({
+    cx : nextCX,
+    cy : nextCY});
+
+    this.generateWalls({
+    cx : nextCX+200,
+    cy : nextCY});
+
+    this.generateWalls({
+    cx : nextCX+400,
+    cy : nextCY});
+  }
+}
+
 },
 
 _findNearestShip : function(posX, posY) {
@@ -120,12 +150,21 @@ ALIEN_TURN_MIN : 20,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets];
+
+    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets, this._walls];
+
 },
 
 init: function() {
     this._generateRocks();
+
+    this.generateEnemyShip({
+        sprite: g_sprites.enemyship
+    });
+
     //this._generateShip();
+    this._generateWalls();
+
 },
 
 fireBullet: function(cx, cy, velX, velY, rotation, forf) {
@@ -154,8 +193,16 @@ generateRock : function(descr) {
     this._rocks.push(new Rock(descr));
 },
 
+generateEnemyShip: function(descr) {
+    this._ships.push(new EnemyShip(descr));
+},
+
 generateShip : function(descr) {
     this._ships.push(new SpaceShip(descr));
+},
+generateWalls : function(descr) {
+      this._walls.push(new defenceWall(descr));
+
 },
 
 killNearestShip : function(xPos, yPos) {

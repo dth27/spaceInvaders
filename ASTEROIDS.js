@@ -36,6 +36,10 @@ need to tweak it if you do something "non-obvious" in yours.
 var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
 
+var container = document.getElementById('starfield');
+var starfield = new Starfield();
+starfield.initialise(container);
+starfield.start(); 
 /*
 0        1         2         3         4         5         6         7         8
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -46,7 +50,7 @@ var g_ctx = g_canvas.getContext("2d");
 
 var song = new Audio("sounds/game2.mp3");
 function playSong(){
-  song.play();
+  //song.play();
 }
 
 // ====================
@@ -61,7 +65,7 @@ function updateScoreBoard(ctx) {
   ctx.fillStyle = "white";
   ctx.beginPath();
   ctx.textAlign = "center";
-  ctx.fillText("Score: " + Math.round(score*Math.PI),ctx.canvas.width-70, ctx.canvas.height-20);
+  ctx.fillText("Score: " + score, ctx.canvas.width-70, ctx.canvas.height-20);
   ctx.closePath();
 }
 
@@ -79,6 +83,13 @@ function updateVictory(){
     ctx.closePath;
   }
 }
+
+// ====================
+// GAME OVER
+// ====================
+//function updateGameOver() {
+	//if (g_gameOver) {
+
 
 // ====================
 // CREATE INITIAL SHIPS
@@ -134,6 +145,13 @@ var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 
+var g_enemyShip_goLeft = true;
+var g_enemyShip_goRight = false;
+var g_enemyShip_no = 0;
+
+var g_score_enemies = 10;
+var g_score_enemyship = 100;
+
 var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -163,7 +181,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_HALT)) entityManager.haltShips();
 
-    if (eatKey(KEY_YES)) {
+    if (eatKey(KEY_YES) && g_victory) {
         entityManager._generateRocks();
         g_victory = false;
     }
@@ -212,6 +230,8 @@ function renderSimulation(ctx) {
     updateScoreBoard(ctx);
     updateVictory(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
+
+
 }
 
 
@@ -228,7 +248,10 @@ function requestPreloads() {
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
         alien  : "images/alien.png",
 		alien2 : "images/alien2.png",
-		alien3 : "images/alien3.png"
+		alien3 : "images/alien3.png",
+		enemyship : "images/enemyship1.png",
+        enemyship2 : "images/enemyship2.png",
+        enemyship3 : "images/enemyship3.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -243,11 +266,15 @@ function preloadDone() {
     g_sprites.alien  = new Sprite(g_images.alien);
 	g_sprites.alien2 = new Sprite(g_images.alien2);
 	g_sprites.alien3 = new Sprite(g_images.alien3);
+    g_sprites.enemyship = new Sprite(g_images.enemyship);
+    g_sprites.enemyship2 = new Sprite(g_images.enemyship2);
+    g_sprites.enemyship3 = new Sprite(g_images.enemyship3);
     g_sprites.bullet = new Sprite(g_images.ship);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
     createInitialShips();
+
 
     main.init();
 }

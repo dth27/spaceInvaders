@@ -85,6 +85,9 @@ Rock.prototype.takeBulletHit = function () {
     this.kill();
 
     this.evaporateSound.play();
+
+    //update score
+    score += g_score_enemies;
 };
 
 // For when we implement shooting aliens
