@@ -1,10 +1,20 @@
 4. fundur
 
-Fleiri borð
+Fleiri borð - Sandra
 Vantar 3 líf - Diljá
-Game Over ef geimverur ná niður
+Game Over ef geimverur ná niður - Ragnar
 Starfield í canvas (og setja í mainlykkju) - Diljá
-highscore system til hliðar
-verndarveggur (minnka og fjölga) -Diljá
+
+verndarveggur (laga, minnka og fjölga, líf) -Diljá
 ufo dæmi - Sandra
 mism. stig fyrir mism geimverur - Ragnar
+byssukúlur (powerup og fleira) - Pétur
+leiðbeiningar - Diljá
+"City"-lína - Sandra
+
+Pælingar:
+
+powerup - ef ufo er skotinn niður getur geimskipið
+skotið sérstöku skoti sem "springur"
+
+highscore system til hliðar

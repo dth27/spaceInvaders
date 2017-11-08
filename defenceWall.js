@@ -35,6 +35,7 @@ defenceWall.prototype.getRadius = function () {
 };
 defenceWall.prototype.takeBulletHit = function(){
   this.kill();
+  
 };
 defenceWall.prototype.render = function(ctx){
     this.drawWall(ctx, this.cx, this.cy);
