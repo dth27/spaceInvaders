@@ -42,6 +42,7 @@ function Rock(descr) {
 
 Rock.prototype = new Entity();
 
+<<<<<<< Updated upstream
 Rock.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 Rock.prototype.rotation = 0;
 Rock.prototype.cx = 100;
@@ -75,16 +76,22 @@ Rock.prototype.friendOrFoe = true;
     this.velRot = this.velRot ||
         util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
 };*/
+=======
+>>>>>>> Stashed changes
 
 Rock.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
 
 	spatialManager.unregister(this);
+<<<<<<< Updated upstream
 
   this.fireAlienBullet();
 
   if(this._isDeadNow) return entityManager.KILL_ME_NOW;
+=======
+	if(this._isDeadNow) return entityManager.KILL_ME_NOW;
+>>>>>>> Stashed changes
 
 	if(this._turnAroundNext) {
 		this.velX = -this.velX;
@@ -134,9 +141,12 @@ Rock.prototype.takeBulletHit = function () {
         this.splitSound.play();
     } else { */
     this.evaporateSound.play();
+<<<<<<< Updated upstream
 
     //update score
     score += g_score_enemies;
+=======
+>>>>>>> Stashed changes
     //}
 };
 
@@ -184,9 +194,12 @@ Rock.prototype.render = function (ctx) {
         ctx, this.cx, this.cy, 0
     );
 };
+<<<<<<< Updated upstream
 
 
 function getFiringEnemy(){
   // næst handle undefined enemys
   return  entityManager._rocks[Math.floor((Math.random() * entityManager._rocks.length) + 0)];
 }
+=======
+>>>>>>> Stashed changes

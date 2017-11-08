@@ -33,8 +33,8 @@ SpaceShip.prototype.friendOrFoe = false;
 
 
 SpaceShip.prototype.update = function() {
-  var nextCXleft = (this.cx - 10);
-  var nextCXright = (this.cx + 10);
+  var nextCXleft = (this.cx - 5);
+  var nextCXright = (this.cx + 5);
   spatialManager.unregister(this);
   if (this._isDeadNow){
     return -1;
