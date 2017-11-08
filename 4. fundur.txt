@@ -6,13 +6,16 @@ Game Over ef geimverur ná niður - Ragnar
 Starfield í canvas (og setja í mainlykkju) - Diljá
 
 verndarveggur (laga, minnka og fjölga, líf) -Diljá
-ufo dæmi - Sandra
+ufo (disable eftir victory) - Sandra
 mism. stig fyrir mism geimverur - Ragnar
 byssukúlur (powerup og fleira) - Pétur
 leiðbeiningar - Diljá
 "City"-lína - Sandra
+partical effect - Pétur
 
 Pælingar:
+Ufo : auka líf, fjölga skotum,
+
 
 powerup - ef ufo er skotinn niður getur geimskipið
 skotið sérstöku skoti sem "springur"
