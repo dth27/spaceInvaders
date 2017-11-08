@@ -226,8 +226,9 @@ function requestPreloads() {
     var requiredImages = {
         ship   : "images/spaceship.png",
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "images/rock.png",
-        alien  : "https://media.giphy.com/media/Qz9jVV6CiRSuI/giphy.gif"
+        alien  : "images/alien.png",
+		alien2 : "images/alien2.png",
+		alien3 : "images/alien3.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -239,8 +240,9 @@ function preloadDone() {
 
     g_sprites.ship  = new Sprite(g_images.ship);
     g_sprites.ship2 = new Sprite(g_images.ship2);
-    g_sprites.rock  = new Sprite(g_images.rock);
     g_sprites.alien  = new Sprite(g_images.alien);
+	g_sprites.alien2 = new Sprite(g_images.alien2);
+	g_sprites.alien3 = new Sprite(g_images.alien3);
     g_sprites.bullet = new Sprite(g_images.ship);
     g_sprites.bullet.scale = 0.25;
 

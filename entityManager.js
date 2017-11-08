@@ -51,9 +51,17 @@ _generateRocks : function() {
 		for (var j = 0; j < NUM_COLUMNS; j++) {
 			var nextCX = initialCX + (xInterval * j);
 			var nextCY = initialCY + (yInterval * i);
-			this.generateRock({
-			cx : nextCX,
-			cy : nextCY});
+			if(i > 0 && i < 3) this.generateRock({
+								cx : nextCX,
+								cy : nextCY,
+								sprite : g_sprites.alien2});
+			else if(i === 0) this.generateRock({
+								cx : nextCX,
+								cy : nextCY,
+								sprite : g_sprites.alien3});
+			else this.generateRock({
+					cx : nextCX,
+					cy : nextCY});
 		}
     }
 },
