@@ -36,6 +36,10 @@ need to tweak it if you do something "non-obvious" in yours.
 var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
 
+var container = document.getElementById('starfield');
+var starfield = new Starfield();
+starfield.initialise(container);
+starfield.start(); 
 /*
 0        1         2         3         4         5         6         7         8
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -93,75 +97,6 @@ function createInitialShips() {
 
 }
 
-
-// ====================
-// CREATE  Wall
-// ====================
-/*
-var Width = 10;
-var Height = 5;
-var Padding = 1;
-var TopMargin = 400;
-var LeftMargin = g_canvas.width-100;
-var Rows = 3;
-var Columns = 5;
-var bricks = [];
-for(var i=0; i<Columns; i++) {
-    bricks[i] = [];
-    for(var j=0; j<Rows; j++) {
-        bricks[i][j] = { x: 0, y: 0, status: 1};
-      }
-    }
-
-var brickX;
-var brickY;
-function drawBrickwall(ctx){
-    for(var i=0; i<Columns; i++) {
-        for(var j=0; j<Rows; j++) {
-            if (bricks[i][j].status==1){
-              brickX = (i*(Width+Padding))+LeftMargin;
-              brickY = (j*(Height+Padding))+TopMargin;
-              bricks[i][j].x = brickX;
-              bricks[i][j].y = brickY;
-              ctx.beginPath();
-              ctx.lineWidth = 1;
-              ctx.strokeStyle = "white";
-              ctx.rect(brickX, brickY, Width, Height);
-              ctx.fill();
-              ctx.stroke();
-              ctx.closePath();
-            }
-        }
-    }
-}
-
-function wallCollision (prevX, prevY, nextX, nextY, r){
-  for(var i=0; i<Columns; i++) {
-        for(var j=0; j<Rows; j++) {
-            var brick = bricks[i][j];
-            if (brick.status == 1){
-            if (nextX > brick.x && nextX < brick.x+Width
-              && nextY > brick.y && nextY < brick.y+Height){
-                if (g_moreBalls){
-                var temp = Height;
-                Height = Width;
-                Width = temp;}
-                brick.status = 0;
-                g_ball.yVel *= -1;
-                bricksound.play();
-                brickss.play();
-                score++;
-                if (score == (Columns * Rows)){
-                  pausemusic();
-                  woah.play();
-                  youWon();
-                }
-              }
-            }
-          }
-        }
-      }
-*/
 // =============
 // GATHER INPUTS
 // =============
