@@ -1,0 +1,10 @@
+4. fundur
+
+Fleiri borð
+Vantar 3 líf - Diljá
+Game Over ef geimverur ná niður
+Starfield í canvas (og setja í mainlykkju) - Diljá
+highscore system til hliðar
+verndarveggur (minnka og fjölga) -Diljá
+ufo dæmi - Sandra
+mism. stig fyrir mism geimverur - Ragnar
