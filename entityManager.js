@@ -30,11 +30,9 @@ var entityManager = {
 _rocks   : [],
 _bullets : [],
 _ships   : [],
-<<<<<<< Updated upstream
 _alienbullets : [],
-=======
 _walls   : [],
->>>>>>> Stashed changes
+
 
 _bShowRocks : true,
 // Keeps track of whether aliens should turn around or not.
@@ -144,26 +142,21 @@ ALIEN_TURN_MIN : 20,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-<<<<<<< Updated upstream
-    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets];
-=======
-    this._categories = [this._rocks, this._bullets, this._ships, this._walls];
->>>>>>> Stashed changes
+
+    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets, this._walls];
+
 },
 
 init: function() {
     this._generateRocks();
-<<<<<<< Updated upstream
 
     this.generateEnemyShip({
         sprite: g_sprites.enemyship
     });
 
     //this._generateShip();
-=======
     this._generateWalls();
 
->>>>>>> Stashed changes
 },
 
 fireBullet: function(cx, cy, velX, velY, rotation, forf) {
