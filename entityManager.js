@@ -185,7 +185,8 @@ fireEnemyBullet: function(cx, cy, velX, velY, rotation, forf) {
         velX : velX,
         velY : velY,
         friendOrFoe : forf,
-        rotation : rotation
+        rotation : rotation,
+        sprite : g_sprites.enemybullet
     }));
 },
 
@@ -272,7 +273,7 @@ update: function(du) {
 	if (g_gameOver) {
 		return;
 	}
-	
+
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];

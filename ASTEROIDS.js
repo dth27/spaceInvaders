@@ -39,7 +39,7 @@ var g_ctx = g_canvas.getContext("2d");
 var container = document.getElementById('starfield');
 var starfield = new Starfield();
 starfield.initialise(container);
-starfield.start(); 
+starfield.start();
 /*
 0        1         2         3         4         5         6         7         8
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -198,7 +198,7 @@ function processDiagnostics() {
 			entityManager._generateAliens();
 			g_victory = false;
 		}
-		
+
 		if(g_gameOver) {
 			score = 0;
 			entityManager.resetGame();
@@ -265,14 +265,16 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        ship   : "images/spaceship.png",
-        ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        alien  : "images/alien.png",
+    ship   : "images/spaceship.png",
+    ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
+    alien  : "images/alien.png",
 		alien2 : "images/alien2.png",
 		alien3 : "images/alien3.png",
 		enemyship : "images/enemyship1.png",
-        enemyship2 : "images/enemyship2.png",
-        enemyship3 : "images/enemyship3.png"
+    enemyship2 : "images/enemyship2.png",
+    enemyship3 : "images/enemyship3.png",
+    enemybullet : "images/alienShoot.png"
+
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -284,14 +286,15 @@ function preloadDone() {
 
     g_sprites.ship  = new Sprite(g_images.ship);
     g_sprites.alien  = new Sprite(g_images.alien);
-	g_sprites.alien2 = new Sprite(g_images.alien2);
-	g_sprites.alien3 = new Sprite(g_images.alien3);
+	  g_sprites.alien2 = new Sprite(g_images.alien2);
+	  g_sprites.alien3 = new Sprite(g_images.alien3);
     g_sprites.enemyship = new Sprite(g_images.enemyship);
     g_sprites.enemyship2 = new Sprite(g_images.enemyship2);
     g_sprites.enemyship3 = new Sprite(g_images.enemyship3);
     g_sprites.bullet = new Sprite(g_images.ship);
     g_sprites.bullet.scale = 0.25;
-
+    g_sprites.enemybullet = new Sprite(g_images.enemybullet);
+    g_sprites.enemybullet.scale = 0.5;
     entityManager.init();
     createInitialShips();
 

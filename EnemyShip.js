@@ -91,6 +91,12 @@ EnemyShip.prototype.takeBulletHit = function(){
     this.kill();
     this.killSound.play();
 
+    // turn on sprayGun
+    if (!g_sprayGunB) {
+      g_sprayGunB = true;
+      g_tempSprayGunAmmo = g_sprayGunAmmo;
+    }
+
     //update score
     score += g_score_enemyship;
 

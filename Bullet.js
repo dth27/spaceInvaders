@@ -18,9 +18,11 @@ function Bullet(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
 
+
     // Make a noise when I am created (i.e. fired)
     this.fireSound.play();
 
+    this.sprite = this.sprite || g_sprites.bullet;
 /*
     // Diagnostics to check inheritance stuff
     this._bulletProperty = true;
@@ -41,6 +43,9 @@ Bullet.prototype.zappedSound = new Audio(
 var MAGAZINE = 3;
 var ALIENMAGAZINE = 5;
 var TEMPALIENMAGAZINE = 1;
+var g_sprayGunB = false;
+var g_sprayGunAmmo = 6;
+var g_tempSprayGunAmmo = 0;
 // Initial, inheritable, default values
 Bullet.prototype.rotation = 0;
 Bullet.prototype.cx = 200;
@@ -109,7 +114,7 @@ Bullet.prototype.render = function (ctx) {
         ctx.globalAlpha = this.lifeSpan / fadeThresh;
     }
 
-    g_sprites.bullet.drawWrappedCentredAt(
+    this.sprite.drawWrappedCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
 

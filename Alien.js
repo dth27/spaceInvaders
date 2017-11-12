@@ -19,7 +19,7 @@ function Alien(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
-	
+
 	this.velX = 1;
 	this._turnAroundNext = false;
 
@@ -46,13 +46,13 @@ Alien.prototype.update = function (du) {
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
 
 	spatialManager.unregister(this);
-	
-	//if(this.cy > g_canvas.height - (this.sprite.height / 2)) 
+
+	//if(this.cy > g_canvas.height - (this.sprite.height / 2))
 
 	this.fireAlienBullet();
 
 	if(this._isDeadNow) return entityManager.KILL_ME_NOW;
-	
+
 	if(this.cy > 500) {
 		g_gameOver = true;
 		return;
@@ -124,7 +124,7 @@ Alien.prototype.turnAround = function () {
 }
 
 
-Alien.prototype.render = function (ctx) { 
+Alien.prototype.render = function (ctx) {
     this.sprite.drawWrappedCentredAt(
         ctx, this.cx, this.cy, 0
     );

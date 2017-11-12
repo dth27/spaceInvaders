@@ -66,21 +66,27 @@ SpaceShip.prototype.SpaceShipfireBullet = function() {
     if (TEMPALIENMAGAZINE <= ALIENMAGAZINE) {
       TEMPALIENMAGAZINE++;
     }
-    if (entityManager._bullets.length < MAGAZINE) {
-      var dX = +Math.sin(this.rotation);
-      var dY = -Math.cos(this.rotation);
-      var launchDist = this.getRadius() * 1.2;
+    if (entityManager._bullets.length < MAGAZINE+g_tempSprayGunAmmo) {
 
-      var relVel = this.launchVel;
-      var relVelX = dX * relVel;
-      var relVelY = dY * relVel;
+     var dX = +Math.sin(this.rotation)  ;
+     var dY = -Math.cos(this.rotation)  ;
+     var launchDist = this.getRadius() * 1.2;
 
-      entityManager.fireBullet(
-         this.cx + dX * launchDist, this.cy + dY * launchDist,
-         this.velX + relVelX, this.velY + relVelY,
-         this.rotation,false);
+     var relVel = this.launchVel;
+     var relVelX = dX * relVel;
+     var relVelY = dY * relVel;
+
+     entityManager.fireBullet(
+        this.cx + dX * launchDist, this.cy + dY * launchDist,
+        this.velX + relVelX, this.velY + relVelY,
+        this.rotation,false);
+    if (g_sprayGunB && g_tempSprayGunAmmo >= 2) {
+      this.sprayGun();
+      g_tempSprayGunAmmo -= 2;
+    } else {
+      g_sprayGunB = false;
+      g_tempSprayGunAmmo = 0;
     }
-
   }
 };
 
@@ -100,3 +106,40 @@ SpaceShip.prototype.render = function(ctx){
   this.sprite.drawWrappedCentredAt(ctx, this.cx, this.cy, this.rotation);
   this.sprite.scale = origScale;
 };
+
+SpaceShip.prototype.sniperGun = function(){
+
+};
+
+SpaceShip.prototype.machineGun = function(){
+
+};
+
+SpaceShip.prototype.sprayGun = function(){
+  var dX = +Math.sin(this.rotation)  + 0.6;
+  var dY = -Math.cos(this.rotation)  - 0.9;
+  var launchDist = this.getRadius() * 1.2;
+
+  var relVel = this.launchVel;
+  var relVelX = dX * relVel;
+  var relVelY = dY * relVel;
+
+ entityManager.fireBullet(
+     this.cx + dX * launchDist, this.cy + dY * launchDist,
+     this.velX + relVelX, this.velY + relVelY,
+     this.rotation,false);
+
+ var dX = +Math.sin(this.rotation)  -0.9 ;
+ var dY = -Math.cos(this.rotation)  -0.9;
+ var launchDist = this.getRadius() * 1.2;
+
+ var relVel = this.launchVel;
+ var relVelX = dX * relVel;
+ var relVelY = dY * relVel;
+
+ entityManager.fireBullet(
+    this.cx + dX * launchDist, this.cy + dY * launchDist,
+    this.velX + relVelX, this.velY + relVelY,
+    this.rotation,false);
+  };
+}
