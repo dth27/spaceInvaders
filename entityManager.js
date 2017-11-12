@@ -27,20 +27,20 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-_rocks   : [],
+_aliens   : [],
 _bullets : [],
 _ships   : [],
 _alienbullets : [],
 _walls   : [],
 
 
-_bShowRocks : true,
+_bShowAliens : true,
 // Keeps track of whether aliens should turn around or not.
 _turnAliensNext : false,
 
 // "PRIVATE" METHODS
 
-_generateRocks : function() {
+_generateAliens : function() {
     var i,
         NUM_ROWS = 5,
 		NUM_COLUMNS = 12,
@@ -53,15 +53,15 @@ _generateRocks : function() {
 		for (var j = 0; j < NUM_COLUMNS; j++) {
 			var nextCX = initialCX + (xInterval * j);
 			var nextCY = initialCY + (yInterval * i);
-			if(i > 0 && i < 3) this.generateRock({
+			if(i > 0 && i < 3) this.generateAlien({
 								cx : nextCX,
 								cy : nextCY,
 								sprite : g_sprites.alien2});
-			else if(i === 0) this.generateRock({
+			else if(i === 0) this.generateAlien({
 								cx : nextCX,
 								cy : nextCY,
 								sprite : g_sprites.alien3});
-			else this.generateRock({
+			else this.generateAlien({
 					cx : nextCX,
 					cy : nextCY});
 		}
@@ -130,7 +130,7 @@ _forEachOf: function(aCategory, fn) {
 
 // Tell all the aliens it's time to turn around
 _turnAliensAround: function() {
-	this._forEachOf(this._rocks, Rock.prototype.turnAround);
+	this._forEachOf(this._aliens, Alien.prototype.turnAround);
 	this._turnAliensNext = false;
 },
 
@@ -151,12 +151,12 @@ ALIEN_TURN_MIN : 20,
 //
 deferredSetup : function () {
 
-    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets, this._walls];
+    this._categories = [this._aliens, this._bullets, this._ships, this._alienbullets, this._walls];
 
 },
 
 init: function() {
-    this._generateRocks();
+    this._generateAliens();
 
     this.generateEnemyShip({
         sprite: g_sprites.enemyship
@@ -189,8 +189,8 @@ fireEnemyBullet: function(cx, cy, velX, velY, rotation, forf) {
     }));
 },
 
-generateRock : function(descr) {
-    this._rocks.push(new Rock(descr));
+generateAlien : function(descr) {
+    this._aliens.push(new Alien(descr));
 },
 
 generateEnemyShip: function(descr) {
@@ -227,8 +227,8 @@ haltShips: function() {
     this._forEachOf(this._ships, SpaceShip.prototype.halt);
 },
 
-toggleRocks: function() {
-    this._bShowRocks = !this._bShowRocks;
+toggleAliens: function() {
+    this._bShowAliens = !this._bShowAliens;
 },
 
 // You guessed it, make the aliens turn around. More specifically:
@@ -261,7 +261,7 @@ update: function(du) {
 
 	if (this._turnAliensNext) this._turnAliensAround();
 
-  if (this._rocks.length === 0) g_victory = true;
+  if (this._aliens.length === 0) g_victory = true;
 
 
 },
@@ -274,8 +274,8 @@ render: function(ctx) {
 
         var aCategory = this._categories[c];
 
-        if (!this._bShowRocks &&
-            aCategory == this._rocks)
+        if (!this._bShowAliens &&
+            aCategory == this._aliens)
             continue;
 
         for (var i = 0; i < aCategory.length; ++i) {

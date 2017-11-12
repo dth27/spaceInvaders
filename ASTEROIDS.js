@@ -182,14 +182,14 @@ function processDiagnostics() {
     if (eatKey(KEY_HALT)) entityManager.haltShips();
 
     if (eatKey(KEY_YES) && g_victory) {
-        entityManager._generateRocks();
+        entityManager._generateAliens();
         g_victory = false;
     }
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
 
-    if (eatKey(KEY_0)) entityManager.toggleRocks();
-    if (eatKey(KEY_L)) entityManager.generateRock({
+    if (eatKey(KEY_0)) entityManager.toggleAliens();
+    if (eatKey(KEY_L)) entityManager.generateAlien({
         sprite: g_sprites.alien
     });
     if (eatKey(KEY_1)) entityManager.generateShip({
@@ -262,7 +262,6 @@ var g_sprites = {};
 function preloadDone() {
 
     g_sprites.ship  = new Sprite(g_images.ship);
-    g_sprites.ship2 = new Sprite(g_images.ship2);
     g_sprites.alien  = new Sprite(g_images.alien);
 	g_sprites.alien2 = new Sprite(g_images.alien2);
 	g_sprites.alien3 = new Sprite(g_images.alien3);
