@@ -87,8 +87,19 @@ function updateVictory(){
 // ====================
 // GAME OVER
 // ====================
-//function updateGameOver() {
-	//if (g_gameOver) {
+function updateGameOver() {
+	if (g_gameOver) {
+		ctx.font = "Bold 20px Arial";
+		ctx.fillStyle = "white";
+		ctx.beginPath();
+		ctx.textAlign = "center";
+		ctx.fillText("GAME OVER",ctx.canvas.width-300, ctx.canvas.height-300);
+		var yourScore = "Your score was: " + score;
+		ctx.fillText(yourScore, ctx.canvas.width / 2, ctx.canvas.height-280);
+		ctx.fillText("Press Y to start a new game",ctx.canvas.width-300, ctx.canvas.height-260);
+		ctx.closePath;
+	}
+}
 
 
 // ====================
@@ -140,6 +151,7 @@ function updateSimulation(du) {
 
 // GAME-SPECIFIC DIAGNOSTICS
 var g_victory = false;
+var g_gameOver = false;
 var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
@@ -152,11 +164,11 @@ var g_enemyShip_no = 0;
 var g_score_enemies = 10;
 var g_score_enemyship = 100;
 
-var KEY_MIXED   = keyCode('M');;
+var KEY_MIXED   = keyCode('M');
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
-var KEY_YES     = keyCode('Y')
+var KEY_YES     = keyCode('Y');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -181,9 +193,17 @@ function processDiagnostics() {
 
     if (eatKey(KEY_HALT)) entityManager.haltShips();
 
-    if (eatKey(KEY_YES) && g_victory) {
-        entityManager._generateAliens();
-        g_victory = false;
+    if (eatKey(KEY_YES)) {
+		if (g_victory) {
+			entityManager._generateAliens();
+			g_victory = false;
+		}
+		
+		if(g_gameOver) {
+			score = 0;
+			entityManager.resetGame();
+			g_gameOver = false;
+		}
     }
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
@@ -229,6 +249,7 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
     updateScoreBoard(ctx);
     updateVictory(ctx);
+	updateGameOver(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 
 

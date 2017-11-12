@@ -52,6 +52,11 @@ Alien.prototype.update = function (du) {
 	this.fireAlienBullet();
 
 	if(this._isDeadNow) return entityManager.KILL_ME_NOW;
+	
+	if(this.cy > 500) {
+		g_gameOver = true;
+		return;
+	}
 
 	if(this._turnAroundNext) {
 		this.velX = -this.velX;

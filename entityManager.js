@@ -227,6 +227,36 @@ haltShips: function() {
     this._forEachOf(this._ships, SpaceShip.prototype.halt);
 },
 
+resetGame: function() {
+	if(this._aliens.length > 0) this.removeAliens();
+	if(this._bullets.length > 0) this.removeBullets();
+	if(this._alienbullets.length > 0) this.removeAlienBullets();
+	this._generateAliens();
+	this._generateWalls();
+	this.resetShips();
+},
+
+removeAliens: function() {
+	for (var i = 0; i < this._aliens.length; i++) {
+		spatialManager.unregister(this._aliens[i]);
+	}
+	this._aliens.splice(0, this._aliens.length);
+},
+
+removeBullets: function() {
+	for (var i = 0; i < this._bullets.length; i++) {
+		spatialManager.unregister(this._bullets[i]);
+	}
+	this._bullets.splice(0, this._bullets.length);
+},
+
+removeAlienBullets: function() {
+	for (var i = 0; i < this._alienbullets.length; i++) {
+		spatialManager.unregister(this._alienbullets[i]);
+	}
+	this._alienbullets.splice(0, this._alienbullets.length);
+},
+
 toggleAliens: function() {
     this._bShowAliens = !this._bShowAliens;
 },
@@ -239,6 +269,10 @@ turnAliensNextUpdate: function() {
 
 update: function(du) {
 
+	if (g_gameOver) {
+		return;
+	}
+	
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
