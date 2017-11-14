@@ -273,7 +273,9 @@ function requestPreloads() {
 		enemyship : "images/enemyship1.png",
     enemyship2 : "images/enemyship2.png",
     enemyship3 : "images/enemyship3.png",
-    enemybullet : "images/alienShoot.png"
+    enemybullet : "images/alienShoot.png",
+    spreadbullet : "images/spread.png",
+    sniperbullet : "images/sniper.png"
 
     };
 
@@ -295,6 +297,11 @@ function preloadDone() {
     g_sprites.bullet.scale = 0.25;
     g_sprites.enemybullet = new Sprite(g_images.enemybullet);
     g_sprites.enemybullet.scale = 0.5;
+    g_sprites.spreadbullet = new Sprite(g_images.spreadbullet);
+    g_sprites.spreadbullet.scale = 0.6;
+    g_sprites.sniperbullet = new Sprite(g_images.sniperbullet);
+    g_sprites.sniperbullet.scale = 0.8;
+
     entityManager.init();
     createInitialShips();
 

@@ -178,6 +178,30 @@ fireBullet: function(cx, cy, velX, velY, rotation, forf) {
     }));
 },
 
+fireSpreadBullet: function(cx, cy, velX, velY, rotation, forf) {
+    this._bullets.push(new Bullet({
+        cx   : cx,
+        cy   : cy,
+        velX : velX,
+        velY : velY,
+        friendOrFoe : forf,
+        rotation : rotation,
+        sprite : g_sprites.spreadbullet
+    }));
+},
+
+fireSniperBullet: function(cx, cy, velX, velY, rotation, forf) {
+    this._bullets.push(new Bullet({
+        cx   : cx,
+        cy   : cy,
+        velX : velX,
+        velY : velY,
+        friendOrFoe : forf,
+        rotation : rotation,
+        sprite : g_sprites.sniperbullet
+    }));
+},
+
 fireEnemyBullet: function(cx, cy, velX, velY, rotation, forf) {
     this._alienbullets.push(new Bullet({
         cx   : cx,

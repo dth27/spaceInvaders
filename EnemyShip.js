@@ -91,11 +91,8 @@ EnemyShip.prototype.takeBulletHit = function(){
     this.kill();
     this.killSound.play();
 
-    // turn on sprayGun
-    if (!g_sprayGunB) {
-      g_sprayGunB = true;
-      g_tempSprayGunAmmo = g_sprayGunAmmo;
-    }
+    // Handel guns
+    gunHandler();
 
     //update score
     score += g_score_enemyship;
@@ -128,3 +125,32 @@ EnemyShip.prototype.render = function(ctx){
     this.sprite.drawWrappedCentredAt(ctx, this.cx, this.cy, this.rotation);
     this.sprite.scale = origScale;
 };
+
+function gunHandler(){
+
+  var x = Math.floor((Math.random() * 3)+1);
+  switch (x) {
+    case 1:
+      // Turn on sprayGun
+      if (!g_sprayGunB) {
+        g_sprayGunB = true;
+        g_tempSprayGunAmmo = g_sprayGunAmmo;
+      }
+      break;
+    case 2:
+    // Turn on sniperGun
+      if (!g_sniperGunB) {
+        g_sniperGunB = true;
+        g_tempSniperGunAmmo = g_sniperGunAmmo;
+      }
+      break;
+    case 3:
+      // Turn on machineGun
+      if (!g_machineGunB) {
+        g_machineGunB = true;
+        g_tempMachineGunAmmo = g_machineGunAmmo
+      }
+      break;
+  }
+
+}
