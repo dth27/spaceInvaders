@@ -69,7 +69,7 @@ function updateScoreBoard(ctx) {
 }
 
 // ====================
-// Victory
+// Victory & GameOver
 // ====================
 function updateVictory(){
   if (g_victory) {
@@ -82,6 +82,8 @@ function updateVictory(){
     ctx.closePath;
   }
 }
+
+
 
 // ====================
 // GAME OVER
@@ -102,7 +104,7 @@ function updateGameOver() {
 
 
 // ====================
-// CREATE INITIAL SHIPS
+// CREATE INITIALS
 // ====================
 
 function createInitialShips() {
@@ -113,6 +115,22 @@ function createInitialShips() {
     });
 
 }
+
+function createLives(){
+  entityManager.generateLives({
+    cx : 400,
+    cy : 550
+  });
+  entityManager.generateLives({
+    cx : 450,
+    cy : 550
+  });
+  entityManager.generateLives({
+    cx : 500,
+    cy : 550
+  });
+}
+
 
 // =============
 // GATHER INPUTS
@@ -255,7 +273,7 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
     updateScoreBoard(ctx);
     updateVictory(ctx);
-	updateGameOver(ctx);
+    updateGameOver(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 
 
