@@ -166,6 +166,8 @@ var g_score_enemyship = 100;
 var g_score_enemyship2 = 200;
 var g_score_enemyship3 = 300;
 
+var g_level = 0;
+
 var KEY_MIXED   = keyCode('M');
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -197,7 +199,8 @@ function processDiagnostics() {
 
     if (eatKey(KEY_YES)) {
 		if (g_victory) {
-			entityManager._generateAliens();
+			g_level++;
+			entityManager.resetGame();
 			g_victory = false;
 		}
 
@@ -269,7 +272,6 @@ function requestPreloads() {
 
     var requiredImages = {
     ship   : "images/spaceship.png",
-    ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
     alien  : "images/alien.png",
 		alien2 : "images/alien2.png",
 		alien3 : "images/alien3.png",
@@ -291,8 +293,8 @@ function preloadDone() {
 
     g_sprites.ship  = new Sprite(g_images.ship);
     g_sprites.alien  = new Sprite(g_images.alien);
-	  g_sprites.alien2 = new Sprite(g_images.alien2);
-	  g_sprites.alien3 = new Sprite(g_images.alien3);
+	g_sprites.alien2 = new Sprite(g_images.alien2);
+	g_sprites.alien3 = new Sprite(g_images.alien3);
     g_sprites.enemyship = new Sprite(g_images.enemyship);
     g_sprites.enemyship2 = new Sprite(g_images.enemyship2);
     g_sprites.enemyship3 = new Sprite(g_images.enemyship3);

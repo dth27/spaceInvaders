@@ -37,6 +37,10 @@ _walls   : [],
 _bShowAliens : true,
 // Keeps track of whether aliens should turn around or not.
 _turnAliensNext : false,
+// When to increase alien's speed (when their numbers dwindle).
+_accelWhen : 12,
+_accelHowOften : 5,
+_lastAccel : 5,
 
 // "PRIVATE" METHODS
 
@@ -48,19 +52,34 @@ _generateAliens : function() {
 		initialCY = 100,
 		xInterval = 40,
 		yInterval = 40;
-
-    for (i = 0; i < NUM_ROWS; ++i) {
+	
+	// The last row of each type of alien
+	var alien3Boundary = 1 + g_level;
+	var alien2Boundary = 3;
+	
+	// Adjustments based on level
+	if(g_level > 1) {
+		alien3Boundary -= 1;
+		alien2Boundary += 1;
+	}
+	if(g_level > 3) {
+		alien3Boundary -= 1;
+		alien2Boundary += 1;
+	}
+	
+	for (i = 0; i < NUM_ROWS; ++i) {
 		for (var j = 0; j < NUM_COLUMNS; j++) {
 			var nextCX = initialCX + (xInterval * j);
 			var nextCY = initialCY + (yInterval * i);
-			if(i > 0 && i < 3) this.generateAlien({
-								cx : nextCX,
-								cy : nextCY,
-								sprite : g_sprites.alien2});
-			else if(i === 0) this.generateAlien({
+			if(i < alien3Boundary) this.generateAlien({
 								cx : nextCX,
 								cy : nextCY,
 								sprite : g_sprites.alien3});
+			else if(i >= alien3Boundary && i < alien2Boundary) 
+							    this.generateAlien({
+								cx : nextCX,
+								cy : nextCY,
+								sprite : g_sprites.alien2});
 			else this.generateAlien({
 					cx : nextCX,
 					cy : nextCY});
@@ -132,6 +151,14 @@ _forEachOf: function(aCategory, fn) {
 _turnAliensAround: function() {
 	this._forEachOf(this._aliens, Alien.prototype.turnAround);
 	this._turnAliensNext = false;
+},
+
+// Tell all aliens to crank up the speed
+_accelAliens: function(accelLevel) {
+	var speedModifier = 1 + (accelLevel / _accelHowOften);
+	for (var i = 0; i < this._aliens.length; i++) {
+		this._aliens[i].setSpeedModifier(speedModifier);
+	}
 },
 
 // PUBLIC METHODS
@@ -258,6 +285,7 @@ resetGame: function() {
 	if(this._alienbullets.length > 0) this.removeAlienBullets();
 	this._generateAliens();
 	this._generateWalls();
+	this._lastAccel = 5;
 	this.resetShips();
 },
 
@@ -292,6 +320,13 @@ turnAliensNextUpdate: function() {
 	this._turnAliensNext = true;
 },
 
+_accelAliens: function(accelLevel) {
+	var speedModifier = 1 + (accelLevel / this._accelHowOften);
+	for (var i = 0; i < this._aliens.length; i++) {
+		this._aliens[i].setSpeedModifier(speedModifier);
+	}
+},
+
 update: function(du) {
 
 	if (g_gameOver) {
@@ -317,12 +352,17 @@ update: function(du) {
             }
         }
     }
-
+	
+	// Check whether you need to speed up the aliens.
+	var maybeAccel = Math.ceil(this._aliens.length / this._accelWhen);
+	if (maybeAccel <= 4 && maybeAccel < this._lastAccel) {
+		this._accelAliens(this._accelHowOften - maybeAccel);
+		this._lastAccel = maybeAccel;
+	}
+	
 	if (this._turnAliensNext) this._turnAliensAround();
 
   if (this._aliens.length === 0) g_victory = true;
-
-
 },
 
 render: function(ctx) {

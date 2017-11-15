@@ -23,9 +23,10 @@ function Alien(descr) {
 	this.velX = 1;
 	this._turnAroundNext = false;
 
-    // Default sprite and scale, if not otherwise specified
+	this._speedModifier = 1;
+
+    // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.alien;
-    //this.scale  = this.scale  || 1;
 
 };
 
@@ -40,10 +41,9 @@ Alien.prototype.velY = 0;
 Alien.prototype.launchVel = 2;
 Alien.prototype.friendOrFoe = true;
 
-
 Alien.prototype.update = function (du) {
 
-    // TODO: YOUR STUFF HERE! --- Unregister and check for death
+    // Unregister and check for death
 
 	spatialManager.unregister(this);
 
@@ -58,24 +58,24 @@ Alien.prototype.update = function (du) {
 		return;
 	}
 
+	var levelToSpeed = g_level / 5;
 	if(this._turnAroundNext) {
 		this.velX = -this.velX;
-		this.cx += this.velX * du;
+		this.cx += (this.velX + (levelToSpeed * this.velX)) * this._speedModifier * du;
 		this.cy += 5;
 		this._turnAroundNext = false;
 	}
 	else {
-		this.cx += this.velX * du;
+		this.cx += (this.velX + (levelToSpeed * this.velX)) * this._speedModifier * du;
 		if(this.cx > entityManager.ALIEN_TURN_MAX ||
 		   this.cx < entityManager.ALIEN_TURN_MIN) {
 			entityManager.turnAliensNextUpdate();
 		}
 	}
 
-    // TODO: YOUR STUFF HERE! --- (Re-)Register
+	// (Re-)Register
 
 	spatialManager.register(this);
-
 };
 
 Alien.prototype.getRadius = function () {
@@ -92,7 +92,7 @@ Alien.prototype.takeBulletHit = function () {
     this.evaporateSound.play();
 
     //update score
-    g_score += g_score_enemies;
+    g_score += g_score_enemies * this.whatAlienAmI();
 };
 
 // For when we implement shooting aliens
@@ -115,14 +115,22 @@ Alien.prototype.fireAlienBullet = function () {
        enemy.cx + dX * launchDist, enemy.cy + dY * launchDist,
        relVelX, relVelY,
        enemy.rotation, true);
-
   }
 };
 
 Alien.prototype.turnAround = function () {
 	this._turnAroundNext = true;
-}
+};
 
+Alien.prototype.setSpeedModifier = function (newSpeedModifier) {
+	this._speedModifier = newSpeedModifier;
+};
+
+Alien.prototype.whatAlienAmI = function () {
+	if (this.sprite === g_sprites.alien2) return 2;
+	else if (this.sprite === g_sprites.alien3) return 3;
+	else return 1;
+};
 
 Alien.prototype.render = function (ctx) {
     this.sprite.drawWrappedCentredAt(
@@ -134,4 +142,4 @@ Alien.prototype.render = function (ctx) {
 function getFiringEnemy(){
   // næst handle undefined enemys
   return  entityManager._aliens[Math.floor((Math.random() * entityManager._aliens.length) + 0)];
-}
+};
