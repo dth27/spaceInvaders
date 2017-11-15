@@ -113,6 +113,7 @@ strokeLine: function (ctx, x_begin, y_begin, x_end, y_end, line_Width, style) {
     ctx.moveTo(x_begin,y_begin);
     ctx.lineTo(x_end,y_end);
     ctx.stroke();
+    ctx.closePath();
 }
 
 
