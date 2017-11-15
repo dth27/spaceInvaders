@@ -32,6 +32,7 @@ _bullets : [],
 _ships   : [],
 _alienbullets : [],
 _walls   : [],
+_Lives   : [],
 
 
 _bShowAliens : true,
@@ -52,11 +53,11 @@ _generateAliens : function() {
 		initialCY = 100,
 		xInterval = 40,
 		yInterval = 40;
-	
+
 	// The last row of each type of alien
 	var alien3Boundary = 1 + g_level;
 	var alien2Boundary = 3;
-	
+
 	// Adjustments based on level
 	if(g_level > 1) {
 		alien3Boundary -= 1;
@@ -66,7 +67,7 @@ _generateAliens : function() {
 		alien3Boundary -= 1;
 		alien2Boundary += 1;
 	}
-	
+
 	for (i = 0; i < NUM_ROWS; ++i) {
 		for (var j = 0; j < NUM_COLUMNS; j++) {
 			var nextCX = initialCX + (xInterval * j);
@@ -75,7 +76,7 @@ _generateAliens : function() {
 								cx : nextCX,
 								cy : nextCY,
 								sprite : g_sprites.alien3});
-			else if(i >= alien3Boundary && i < alien2Boundary) 
+			else if(i >= alien3Boundary && i < alien2Boundary)
 							    this.generateAlien({
 								cx : nextCX,
 								cy : nextCY,
@@ -112,7 +113,20 @@ _generateWalls : function() {
     cy : nextCY});
   }
 }
+},
 
+_generateLives : function() {
+  var i,
+  NUM_LIVES = 3,
+  initialCX = 20,
+  xInterval = 40;
+  for (i=0; i<NUM_LIVES; ++i){
+    var nextCX = initialCX + (xInterval*i);
+    this.generateLives({
+      cx : nextCX,
+      cy : g_canvas.height-20
+    });
+  }
 },
 
 _findNearestShip : function(posX, posY) {
@@ -153,14 +167,6 @@ _turnAliensAround: function() {
 	this._turnAliensNext = false;
 },
 
-// Tell all aliens to crank up the speed
-_accelAliens: function(accelLevel) {
-	var speedModifier = 1 + (accelLevel / _accelHowOften);
-	for (var i = 0; i < this._aliens.length; i++) {
-		this._aliens[i].setSpeedModifier(speedModifier);
-	}
-},
-
 // PUBLIC METHODS
 
 // A special return value, used by other objects,
@@ -178,7 +184,7 @@ ALIEN_TURN_MIN : 20,
 //
 deferredSetup : function () {
 
-    this._categories = [this._aliens, this._bullets, this._ships, this._alienbullets, this._walls];
+    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets, this._walls, this._Lives];
 
 },
 
@@ -191,6 +197,7 @@ init: function() {
 
     //this._generateShip();
     this._generateWalls();
+    this._generateLives();
 
 },
 
@@ -257,6 +264,10 @@ generateWalls : function(descr) {
 
 },
 
+generateLives : function(descr) {
+      this._Lives.push(new Lives(descr));
+},
+
 killNearestShip : function(xPos, yPos) {
     var theShip = this._findNearestShip(xPos, yPos).theShip;
     if (theShip) {
@@ -320,7 +331,7 @@ turnAliensNextUpdate: function() {
 	this._turnAliensNext = true;
 },
 
-_accelAliens: function(accelLevel) {
+accelAliens: function(accelLevel) {
 	var speedModifier = 1 + (accelLevel / this._accelHowOften);
 	for (var i = 0; i < this._aliens.length; i++) {
 		this._aliens[i].setSpeedModifier(speedModifier);
@@ -352,14 +363,14 @@ update: function(du) {
             }
         }
     }
-	
+
 	// Check whether you need to speed up the aliens.
 	var maybeAccel = Math.ceil(this._aliens.length / this._accelWhen);
 	if (maybeAccel <= 4 && maybeAccel < this._lastAccel) {
-		this._accelAliens(this._accelHowOften - maybeAccel);
+		this.accelAliens(this._accelHowOften - maybeAccel);
 		this._lastAccel = maybeAccel;
 	}
-	
+
 	if (this._turnAliensNext) this._turnAliensAround();
 
   if (this._aliens.length === 0) g_victory = true;

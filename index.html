@@ -6,18 +6,28 @@
   <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
+<div id="starfield"></div>
 
   <div class= "mainContainer">
     <canvas id="myCanvas" width="600" height="600"
       style="border: 1px solid white;">
       Sorry, but your browser does not support the HTML5 canvas tag.
     </canvas>
+    <div class="instructions">
+      <h1>SPACE INVADER</h1>
+      <h2>Destroy those <br/> aliens before they destroy your city!</h2>
+      <p>SHOOT WITH SPACE BAR</p>
+      <p>MOVE WITH A & D</p>
+      <p>PAUSE WITH P</p>
+      <p>+ more secret functions!</p>
+    </div>
   </div>
-<div id="starfield"></div>
+
+
 
   <div id="output"></div>
 
-  <script src="starfield.js"></script>
+  <script src="Starfield.js"></script>
   <script src="globals.js"></script>
   <script src="consts.js"></script>
   <script src="util.js"></script>
@@ -34,6 +44,8 @@
   <script src="SpaceShip.js"></script>
   <script src="EnemyShip.js"></script>
   <script src="defenceWall.js"></script>
+  <script src="Lives.js"></script>
+
   <script src="update.js"></script>
   <script src="render.js"></script>
 
