@@ -192,7 +192,7 @@ ALIEN_TURN_MIN : 20,
 //
 deferredSetup : function () {
 
-    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets, this._walls, this._Lives];
+    this._categories = [this._aliens, this._bullets, this._ships, this._alienbullets, this._walls, this._Lives];
 
 },
 
