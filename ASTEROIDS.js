@@ -39,7 +39,7 @@ var g_ctx = g_canvas.getContext("2d");
 var container = document.getElementById('starfield');
 var starfield = new Starfield();
 starfield.initialise(container);
-starfield.start(); 
+starfield.start();
 /*
 0        1         2         3         4         5         6         7         8
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -70,7 +70,7 @@ function updateScoreBoard(ctx) {
 }
 
 // ====================
-// Victory
+// Victory & GameOver
 // ====================
 function updateVictory(){
   if (g_victory) {
@@ -79,6 +79,17 @@ function updateVictory(){
     ctx.beginPath();
     ctx.textAlign = "center";
     ctx.fillText("Victory",ctx.canvas.width-300, ctx.canvas.height-300);
+    ctx.fillText("Press Y to continue",ctx.canvas.width-300, ctx.canvas.height-280);
+    ctx.closePath;
+  }
+}
+function GameOver(ctx){
+  if(g_lost){
+    ctx.font = "Bold 20px Arial";
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.textAlign = "center";
+    ctx.fillText("Game Over!",ctx.canvas.width-300, ctx.canvas.height-300);
     ctx.fillText("Press Y to continue",ctx.canvas.width-300, ctx.canvas.height-280);
     ctx.closePath;
   }
@@ -92,7 +103,7 @@ function updateVictory(){
 
 
 // ====================
-// CREATE INITIAL SHIPS
+// CREATE INITIALS
 // ====================
 
 function createInitialShips() {
@@ -103,6 +114,22 @@ function createInitialShips() {
     });
 
 }
+
+function createLives(){
+  entityManager.generateLives({
+    cx : 400,
+    cy : 550
+  });
+  entityManager.generateLives({
+    cx : 450,
+    cy : 550
+  });
+  entityManager.generateLives({
+    cx : 500,
+    cy : 550
+  });
+}
+
 
 // =============
 // GATHER INPUTS
@@ -140,6 +167,7 @@ function updateSimulation(du) {
 
 // GAME-SPECIFIC DIAGNOSTICS
 var g_victory = false;
+var g_lost = false;
 var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
@@ -229,6 +257,7 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
     updateScoreBoard(ctx);
     updateVictory(ctx);
+    GameOver(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 
 
@@ -245,7 +274,7 @@ function requestPreloads() {
 
     var requiredImages = {
         ship   : "images/spaceship.png",
-        ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
+        ship2  : "images/spaceship.png",
         alien  : "images/alien.png",
 		alien2 : "images/alien2.png",
 		alien3 : "images/alien3.png",

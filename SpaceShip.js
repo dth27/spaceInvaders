@@ -18,6 +18,8 @@ SpaceShip.prototype.rememberResets = function(){
   this.reset_cx = this.cx;
   this.reset_cy = this.cy;
   this.reset_rotation = this.rotation;
+  this.reset_lifeSpann = this.lifeSpann;
+
 };
 
 SpaceShip.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
@@ -30,6 +32,7 @@ SpaceShip.prototype.velX = 0;
 SpaceShip.prototype.velY = 0;
 SpaceShip.prototype.launchVel = 2;
 SpaceShip.prototype.friendOrFoe = false;
+SpaceShip.prototype.lifeSpann = 2;
 
 
 SpaceShip.prototype.update = function() {
@@ -37,6 +40,8 @@ SpaceShip.prototype.update = function() {
   var nextCXright = (this.cx + 5);
   spatialManager.unregister(this);
   if (this._isDeadNow){
+
+    g_lost = true;
     return -1;
   }
 
@@ -91,7 +96,15 @@ SpaceShip.prototype.reset = function(){
 };
 
 SpaceShip.prototype.takeBulletHit = function(){
+  if (this.lifeSpann == 0){
   this.reset();
+
+}
+  else {
+    this.lifeSpann--;
+    entityManager._Lives[0]._isDeadNow = true;
+    console.log(entityManager._Lives[0]);
+  }
 };
 
 SpaceShip.prototype.render = function(ctx){

@@ -32,6 +32,7 @@ _bullets : [],
 _ships   : [],
 _alienbullets : [],
 _walls   : [],
+_Lives   : [],
 
 
 _bShowRocks : true,
@@ -93,7 +94,20 @@ _generateWalls : function() {
     cy : nextCY});
   }
 }
+},
 
+_generateLives : function() {
+  var i,
+  NUM_LIVES = 3,
+  initialCX = 20,
+  xInterval = 40;
+  for (i=0; i<NUM_LIVES; ++i){
+    var nextCX = initialCX + (xInterval*i);
+    this.generateLives({
+      cx : nextCX,
+      cy : g_canvas.height-20
+    });
+  }
 },
 
 _findNearestShip : function(posX, posY) {
@@ -151,7 +165,7 @@ ALIEN_TURN_MIN : 20,
 //
 deferredSetup : function () {
 
-    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets, this._walls];
+    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets, this._walls, this._Lives];
 
 },
 
@@ -164,6 +178,7 @@ init: function() {
 
     //this._generateShip();
     this._generateWalls();
+    this._generateLives();
 
 },
 
@@ -203,6 +218,10 @@ generateShip : function(descr) {
 generateWalls : function(descr) {
       this._walls.push(new defenceWall(descr));
 
+},
+
+generateLives : function(descr) {
+      this._Lives.push(new Lives(descr));
 },
 
 killNearestShip : function(xPos, yPos) {
@@ -262,6 +281,7 @@ update: function(du) {
 	if (this._turnAliensNext) this._turnAliensAround();
 
   if (this._rocks.length === 0) g_victory = true;
+  if (this._ships[0].lifeSpann===0) g_lost = true;
 
 
 },

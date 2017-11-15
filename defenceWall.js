@@ -15,9 +15,8 @@ var rows = 3;
 var columns = 4;
 defenceWall.prototype.width = 25;
 defenceWall.prototype.height = 10;
-defenceWall.prototype.TopMargin =400;
-defenceWall.prototype.Padding = 1;
-
+defenceWall.prototype.lifeSpann = 2;
+var alpha = 1;
 
 defenceWall.prototype.drawWall = function(ctx, cx, cy) {
             ctx.beginPath();
@@ -34,11 +33,25 @@ defenceWall.prototype.getRadius = function () {
     return this.width/2;
 };
 defenceWall.prototype.takeBulletHit = function(){
-  this.kill();
-  
+  if (this.lifeSpann == 0) this.kill();
+  else {
+
+    this.fadeAway();}
+
 };
+defenceWall.prototype.fadeAway = function(){
+  this.lifeSpann--;
+  if (this.lifeSpann==1){
+    alpha = 0.5;
+  }
+  if (this.lifeSpann==2){
+    alpha = 0.75;
+  }
+}
 defenceWall.prototype.render = function(ctx){
+
     this.drawWall(ctx, this.cx, this.cy);
+    ctx.globalAlpha = alpha;
 };
 defenceWall.prototype.update = function (){
     spatialManager.unregister(this);
