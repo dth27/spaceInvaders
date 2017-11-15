@@ -56,7 +56,6 @@ function playSong(){
 // ====================
 // Scoring
 // ====================
-var score = 0;
 
 function updateScoreBoard(ctx) {
 
@@ -65,7 +64,7 @@ function updateScoreBoard(ctx) {
   ctx.fillStyle = "white";
   ctx.beginPath();
   ctx.textAlign = "center";
-  ctx.fillText("Score: " + score, ctx.canvas.width-70, ctx.canvas.height-20);
+  ctx.fillText("Score: " + g_score, ctx.canvas.width-70, ctx.canvas.height-20);
   ctx.closePath();
 }
 
@@ -94,7 +93,7 @@ function updateGameOver() {
 		ctx.beginPath();
 		ctx.textAlign = "center";
 		ctx.fillText("GAME OVER",ctx.canvas.width-300, ctx.canvas.height-300);
-		var yourScore = "Your score was: " + score;
+		var yourScore = "Your score was: " + g_score;
 		ctx.fillText(yourScore, ctx.canvas.width / 2, ctx.canvas.height-280);
 		ctx.fillText("Press Y to start a new game",ctx.canvas.width-300, ctx.canvas.height-260);
 		ctx.closePath;
@@ -161,8 +160,11 @@ var g_enemyShip_goLeft = true;
 var g_enemyShip_goRight = false;
 var g_enemyShip_no = 0;
 
+var g_score = 0;
 var g_score_enemies = 10;
 var g_score_enemyship = 100;
+var g_score_enemyship2 = 200;
+var g_score_enemyship3 = 300;
 
 var KEY_MIXED   = keyCode('M');
 var KEY_GRAVITY = keyCode('G');
@@ -200,7 +202,8 @@ function processDiagnostics() {
 		}
 
 		if(g_gameOver) {
-			score = 0;
+			g_score = 0;
+			g_enemyShip_no = 0;
 			entityManager.resetGame();
 			g_gameOver = false;
 		}

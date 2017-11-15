@@ -20,19 +20,12 @@ EnemyShip.prototype.rememberResets = function(){
     this.reset_rotation = this.rotation;
 };
 
-//EnemyShip.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
-//EnemyShip.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
-//EnemyShip.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 EnemyShip.prototype.rotation = 0;
-//TODO: breyta þessu tilbaka í 600 og nota aðra aðferð við að seinka innkomu óvinageimskipsins?
 EnemyShip.prototype.cx = 1300;
 EnemyShip.prototype.cy = 50;
 EnemyShip.prototype.velX = 1;
 EnemyShip.prototype.velY = 0;
 EnemyShip.prototype.launchVel = 0;
-
-
-
 
 
 EnemyShip.prototype.update = function() {
@@ -44,7 +37,6 @@ EnemyShip.prototype.update = function() {
     if (this._isDeadNow){
         return entityManager.KILL_ME_NOW;
     }
-
 
     if (g_enemyShip_goLeft) {
         if (this.cx >= (0 - (this.getRadius()*2) - ENEMYSHIP_LATENCY) ) {
@@ -95,10 +87,16 @@ EnemyShip.prototype.takeBulletHit = function(){
     gunHandler();
 
     //update score
-    score += g_score_enemyship;
+    if(g_enemyShip_no == 0) {
+        g_score += g_score_enemyship;
+    }
+    else if(g_enemyShip_no == 1) {
+        g_score += g_score_enemyship2;
+    }
+    else {
+        g_score += g_score_enemyship3;
+    }
 
-    //update the scoring for enemyship (starting at 100 point, goes up 100 point for each new enemyship)
-    g_score_enemyship += 100;
 
     //update what EnemyShip should be generated next
     g_enemyShip_no += 1;
@@ -126,6 +124,8 @@ EnemyShip.prototype.render = function(ctx){
     this.sprite.scale = origScale;
 };
 
+//When EnemyShip is hit, these power-ups (random choice)
+//is given to the player
 function gunHandler(){
 
   var x = Math.floor((Math.random() * 3)+1);

@@ -92,7 +92,7 @@ Alien.prototype.takeBulletHit = function () {
     this.evaporateSound.play();
 
     //update score
-    score += g_score_enemies;
+    g_score += g_score_enemies;
 };
 
 // For when we implement shooting aliens
