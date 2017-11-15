@@ -153,14 +153,6 @@ _turnAliensAround: function() {
 	this._turnAliensNext = false;
 },
 
-// Tell all aliens to crank up the speed
-_accelAliens: function(accelLevel) {
-	var speedModifier = 1 + (accelLevel / _accelHowOften);
-	for (var i = 0; i < this._aliens.length; i++) {
-		this._aliens[i].setSpeedModifier(speedModifier);
-	}
-},
-
 // PUBLIC METHODS
 
 // A special return value, used by other objects,
@@ -320,7 +312,7 @@ turnAliensNextUpdate: function() {
 	this._turnAliensNext = true;
 },
 
-_accelAliens: function(accelLevel) {
+accelAliens: function(accelLevel) {
 	var speedModifier = 1 + (accelLevel / this._accelHowOften);
 	for (var i = 0; i < this._aliens.length; i++) {
 		this._aliens[i].setSpeedModifier(speedModifier);
@@ -356,7 +348,7 @@ update: function(du) {
 	// Check whether you need to speed up the aliens.
 	var maybeAccel = Math.ceil(this._aliens.length / this._accelWhen);
 	if (maybeAccel <= 4 && maybeAccel < this._lastAccel) {
-		this._accelAliens(this._accelHowOften - maybeAccel);
+		this.accelAliens(this._accelHowOften - maybeAccel);
 		this._lastAccel = maybeAccel;
 	}
 	
