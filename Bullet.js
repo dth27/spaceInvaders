@@ -21,11 +21,7 @@ function Bullet(descr) {
     // Make a noise when I am created (i.e. fired)
     this.fireSound.play();
 
-/*
-    // Diagnostics to check inheritance stuff
-    this._bulletProperty = true;
-    console.dir(this);
-*/
+    this.sprite = this.sprite || g_sprites.bullet;
 
 }
 
@@ -41,6 +37,19 @@ Bullet.prototype.zappedSound = new Audio(
 var MAGAZINE = 3;
 var ALIENMAGAZINE = 5;
 var TEMPALIENMAGAZINE = 1;
+// Spray gun
+var g_sprayGunB = false;
+var g_sprayGunAmmo = 9;
+var g_tempSprayGunAmmo = 0;
+// Sniper gun
+var g_sniperGunB = false;
+var g_sniperGunAmmo = 5;
+var g_tempSniperGunAmmo = 0;
+// Machine gun
+var g_machineGunB = false;
+var g_tempMachineGunAmmo = 0;
+var g_machineGunAmmo = 20
+
 // Initial, inheritable, default values
 Bullet.prototype.rotation = 0;
 Bullet.prototype.cx = 200;
@@ -48,8 +57,6 @@ Bullet.prototype.cy = 200;
 Bullet.prototype.velX = 1;
 Bullet.prototype.velY = 1;
 Bullet.prototype.friendOrFoe = true;
-// Convert times from milliseconds to "nominal" time units.
-Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
 Bullet.prototype.update = function (du) {
 
@@ -103,13 +110,7 @@ Bullet.prototype.takeBulletHit = function () {
 
 Bullet.prototype.render = function (ctx) {
 
-    var fadeThresh = Bullet.prototype.lifeSpan / 3;
-
-    if (this.lifeSpan < fadeThresh) {
-        ctx.globalAlpha = this.lifeSpan / fadeThresh;
-    }
-
-    g_sprites.bullet.drawWrappedCentredAt(
+    this.sprite.drawWrappedCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
 

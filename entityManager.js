@@ -27,7 +27,7 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-_rocks   : [],
+_aliens   : [],
 _bullets : [],
 _ships   : [],
 _alienbullets : [],
@@ -35,13 +35,17 @@ _walls   : [],
 _Lives   : [],
 
 
-_bShowRocks : true,
+_bShowAliens : true,
 // Keeps track of whether aliens should turn around or not.
 _turnAliensNext : false,
+// When to increase alien's speed (when their numbers dwindle).
+_accelWhen : 12,
+_accelHowOften : 5,
+_lastAccel : 5,
 
 // "PRIVATE" METHODS
 
-_generateRocks : function() {
+_generateAliens : function() {
     var i,
         NUM_ROWS = 5,
 		NUM_COLUMNS = 12,
@@ -50,19 +54,34 @@ _generateRocks : function() {
 		xInterval = 40,
 		yInterval = 40;
 
-    for (i = 0; i < NUM_ROWS; ++i) {
+	// The last row of each type of alien
+	var alien3Boundary = 1 + g_level;
+	var alien2Boundary = 3;
+
+	// Adjustments based on level
+	if(g_level > 1) {
+		alien3Boundary -= 1;
+		alien2Boundary += 1;
+	}
+	if(g_level > 3) {
+		alien3Boundary -= 1;
+		alien2Boundary += 1;
+	}
+
+	for (i = 0; i < NUM_ROWS; ++i) {
 		for (var j = 0; j < NUM_COLUMNS; j++) {
 			var nextCX = initialCX + (xInterval * j);
 			var nextCY = initialCY + (yInterval * i);
-			if(i > 0 && i < 3) this.generateRock({
-								cx : nextCX,
-								cy : nextCY,
-								sprite : g_sprites.alien2});
-			else if(i === 0) this.generateRock({
+			if(i < alien3Boundary) this.generateAlien({
 								cx : nextCX,
 								cy : nextCY,
 								sprite : g_sprites.alien3});
-			else this.generateRock({
+			else if(i >= alien3Boundary && i < alien2Boundary)
+							    this.generateAlien({
+								cx : nextCX,
+								cy : nextCY,
+								sprite : g_sprites.alien2});
+			else this.generateAlien({
 					cx : nextCX,
 					cy : nextCY});
 		}
@@ -144,8 +163,16 @@ _forEachOf: function(aCategory, fn) {
 
 // Tell all the aliens it's time to turn around
 _turnAliensAround: function() {
-	this._forEachOf(this._rocks, Rock.prototype.turnAround);
+	this._forEachOf(this._aliens, Alien.prototype.turnAround);
 	this._turnAliensNext = false;
+},
+
+// Tell all aliens to crank up the speed
+_accelAliens: function(accelLevel) {
+	var speedModifier = 1 + (accelLevel / _accelHowOften);
+	for (var i = 0; i < this._aliens.length; i++) {
+		this._aliens[i].setSpeedModifier(speedModifier);
+	}
 },
 
 // PUBLIC METHODS
@@ -170,7 +197,7 @@ deferredSetup : function () {
 },
 
 init: function() {
-    this._generateRocks();
+    this._generateAliens();
 
     this.generateEnemyShip({
         sprite: g_sprites.enemyship
@@ -193,6 +220,30 @@ fireBullet: function(cx, cy, velX, velY, rotation, forf) {
     }));
 },
 
+fireSpreadBullet: function(cx, cy, velX, velY, rotation, forf) {
+    this._bullets.push(new Bullet({
+        cx   : cx,
+        cy   : cy,
+        velX : velX,
+        velY : velY,
+        friendOrFoe : forf,
+        rotation : rotation,
+        sprite : g_sprites.spreadbullet
+    }));
+},
+
+fireSniperBullet: function(cx, cy, velX, velY, rotation, forf) {
+    this._bullets.push(new Bullet({
+        cx   : cx,
+        cy   : cy,
+        velX : velX,
+        velY : velY,
+        friendOrFoe : forf,
+        rotation : rotation,
+        sprite : g_sprites.sniperbullet
+    }));
+},
+
 fireEnemyBullet: function(cx, cy, velX, velY, rotation, forf) {
     this._alienbullets.push(new Bullet({
         cx   : cx,
@@ -200,12 +251,13 @@ fireEnemyBullet: function(cx, cy, velX, velY, rotation, forf) {
         velX : velX,
         velY : velY,
         friendOrFoe : forf,
-        rotation : rotation
+        rotation : rotation,
+        sprite : g_sprites.enemybullet
     }));
 },
 
-generateRock : function(descr) {
-    this._rocks.push(new Rock(descr));
+generateAlien : function(descr) {
+    this._aliens.push(new Alien(descr));
 },
 
 generateEnemyShip: function(descr) {
@@ -246,8 +298,39 @@ haltShips: function() {
     this._forEachOf(this._ships, SpaceShip.prototype.halt);
 },
 
-toggleRocks: function() {
-    this._bShowRocks = !this._bShowRocks;
+resetGame: function() {
+	if(this._aliens.length > 0) this.removeAliens();
+	if(this._bullets.length > 0) this.removeBullets();
+	if(this._alienbullets.length > 0) this.removeAlienBullets();
+	this._generateAliens();
+	this._generateWalls();
+	this._lastAccel = 5;
+	this.resetShips();
+},
+
+removeAliens: function() {
+	for (var i = 0; i < this._aliens.length; i++) {
+		spatialManager.unregister(this._aliens[i]);
+	}
+	this._aliens.splice(0, this._aliens.length);
+},
+
+removeBullets: function() {
+	for (var i = 0; i < this._bullets.length; i++) {
+		spatialManager.unregister(this._bullets[i]);
+	}
+	this._bullets.splice(0, this._bullets.length);
+},
+
+removeAlienBullets: function() {
+	for (var i = 0; i < this._alienbullets.length; i++) {
+		spatialManager.unregister(this._alienbullets[i]);
+	}
+	this._alienbullets.splice(0, this._alienbullets.length);
+},
+
+toggleAliens: function() {
+    this._bShowAliens = !this._bShowAliens;
 },
 
 // You guessed it, make the aliens turn around. More specifically:
@@ -256,7 +339,18 @@ turnAliensNextUpdate: function() {
 	this._turnAliensNext = true;
 },
 
+_accelAliens: function(accelLevel) {
+	var speedModifier = 1 + (accelLevel / this._accelHowOften);
+	for (var i = 0; i < this._aliens.length; i++) {
+		this._aliens[i].setSpeedModifier(speedModifier);
+	}
+},
+
 update: function(du) {
+
+	if (g_gameOver) {
+		return;
+	}
 
     for (var c = 0; c < this._categories.length; ++c) {
 
@@ -278,12 +372,16 @@ update: function(du) {
         }
     }
 
+	// Check whether you need to speed up the aliens.
+	var maybeAccel = Math.ceil(this._aliens.length / this._accelWhen);
+	if (maybeAccel <= 4 && maybeAccel < this._lastAccel) {
+		this._accelAliens(this._accelHowOften - maybeAccel);
+		this._lastAccel = maybeAccel;
+	}
+
 	if (this._turnAliensNext) this._turnAliensAround();
 
-  if (this._rocks.length === 0) g_victory = true;
-  if (this._ships[0].lifeSpann===0) g_lost = true;
-
-
+  if (this._aliens.length === 0) g_victory = true;
 },
 
 render: function(ctx) {
@@ -294,8 +392,8 @@ render: function(ctx) {
 
         var aCategory = this._categories[c];
 
-        if (!this._bShowRocks &&
-            aCategory == this._rocks)
+        if (!this._bShowAliens &&
+            aCategory == this._aliens)
             continue;
 
         for (var i = 0; i < aCategory.length; ++i) {

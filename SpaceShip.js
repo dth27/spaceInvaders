@@ -68,25 +68,26 @@ SpaceShip.prototype.getRadius = function () {
 
 SpaceShip.prototype.SpaceShipfireBullet = function() {
   if (keys[this.KEY_FIRE]) {
-    if (TEMPALIENMAGAZINE <= ALIENMAGAZINE) {
+    if (TEMPALIENMAGAZINE < ALIENMAGAZINE ) {
       TEMPALIENMAGAZINE++;
     }
-    if (entityManager._bullets.length < MAGAZINE) {
-      var dX = +Math.sin(this.rotation);
-      var dY = -Math.cos(this.rotation);
-      var launchDist = this.getRadius() * 1.2;
+    if (entityManager._bullets.length < MAGAZINE+g_tempMachineGunAmmo && !g_sniperGunB && !g_sprayGunB) {
 
-      var relVel = this.launchVel;
-      var relVelX = dX * relVel;
-      var relVelY = dY * relVel;
+     var dX = +Math.sin(this.rotation)  ;
+     var dY = -Math.cos(this.rotation)  ;
+     var launchDist = this.getRadius() * 1.2;
 
-      entityManager.fireBullet(
-         this.cx + dX * launchDist, this.cy + dY * launchDist,
-         this.velX + relVelX, this.velY + relVelY,
-         this.rotation,false);
+     var relVel = this.launchVel;
+     var relVelX = dX * relVel;
+     var relVelY = dY * relVel;
+
+     entityManager.fireBullet(
+        this.cx + dX * launchDist, this.cy + dY * launchDist,
+        this.velX + relVelX, this.velY + relVelY,
+        this.rotation,false);
+
     }
-
-  }
+    this.fireFromSpecialGuns();
 };
 
 SpaceShip.prototype.reset = function(){
@@ -112,4 +113,110 @@ SpaceShip.prototype.render = function(ctx){
   this.sprite.scale = this.scale;
   this.sprite.drawWrappedCentredAt(ctx, this.cx, this.cy, this.rotation);
   this.sprite.scale = origScale;
+};
+
+SpaceShip.prototype.sniperGun = function(){
+  var dX = +Math.sin(this.rotation)  ;
+  var dY = -Math.cos(this.rotation)  ;
+  var launchDist = this.getRadius() * 1.2;
+
+  var relVel = this.launchVel+10;
+  var relVelX = dX * relVel;
+  var relVelY = dY * relVel;
+
+  entityManager.fireSniperBullet(
+     this.cx + dX * launchDist, this.cy + dY * launchDist,
+     this.velX + relVelX, this.velY + relVelY,
+     this.rotation,false);
+};
+
+SpaceShip.prototype.machineGun = function(){
+  var dX = +Math.sin(this.rotation)  ;
+  var dY = -Math.cos(this.rotation)  ;
+  var launchDist = this.getRadius() * 1.2;
+
+  var relVel = this.launchVel;
+  var relVelX = dX * relVel;
+  var relVelY = dY * relVel;
+
+  entityManager.fireBullet(
+     this.cx + dX * launchDist, this.cy + dY * launchDist,
+     this.velX + relVelX, this.velY + relVelY,
+     this.rotation,false);
+};
+
+SpaceShip.prototype.sprayGun = function(){
+  var dX = +Math.sin(this.rotation)  ;
+  var dY = -Math.cos(this.rotation)  ;
+  var launchDist = this.getRadius() * 1.2;
+
+  var relVel = this.launchVel + 2.5;
+  var relVelX = dX * relVel;
+  var relVelY = dY * relVel;
+
+  entityManager.fireSpreadBullet(
+     this.cx + dX * launchDist, this.cy + dY * launchDist,
+     this.velX + relVelX, this.velY + relVelY,
+     this.rotation,false);
+
+  var dX = +Math.sin(this.rotation)  + 0.6;
+  var dY = -Math.cos(this.rotation)  - 0.9;
+  var launchDist = this.getRadius() * 1.2;
+
+  var relVel = this.launchVel;
+  var relVelX = dX * relVel;
+  var relVelY = dY * relVel;
+
+ entityManager.fireSpreadBullet(
+     this.cx + dX * launchDist, this.cy + dY * launchDist,
+     this.velX + relVelX, this.velY + relVelY,
+     this.rotation,false);
+
+ var dX = +Math.sin(this.rotation)  -0.9 ;
+ var dY = -Math.cos(this.rotation)  -0.9;
+ var launchDist = this.getRadius() * 1.2;
+
+ var relVel = this.launchVel;
+ var relVelX = dX * relVel;
+ var relVelY = dY * relVel;
+
+ entityManager.fireSpreadBullet(
+    this.cx + dX * launchDist, this.cy + dY * launchDist,
+    this.velX + relVelX, this.velY + relVelY,
+    this.rotation,false);
+  };
+}
+
+
+SpaceShip.prototype.fireFromSpecialGuns = function(){
+  // =============
+  // Spray gun
+  // =============
+  if (g_sprayGunB && g_tempSprayGunAmmo >= 3) {
+    this.sprayGun();
+    g_tempSprayGunAmmo -= 3;
+  } else {
+    g_sprayGunB = false;
+    g_tempSprayGunAmmo = 0;
+  }
+  // ============
+  // Sniper gun
+  // ============
+  if (g_sniperGunB && g_tempSniperGunAmmo >= 0) {
+    this.sniperGun();
+    g_tempSniperGunAmmo -= 1;
+  } else {
+      g_sniperGunB = false;
+      g_tempSniperGunAmmo = 0;
+  }
+  // ===========
+  // Machine gun
+  // ===========
+  if (g_machineGunB && g_tempMachineGunAmmo >= 0) {
+    this.machineGun();
+    g_tempMachineGunAmmo -= 1;
+  } else {
+      g_machineGunB = false;
+      g_tempMachineGunAmmo = 0;
+  }
 };

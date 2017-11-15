@@ -56,7 +56,6 @@ function playSong(){
 // ====================
 // Scoring
 // ====================
-var score = 0;
 
 function updateScoreBoard(ctx) {
 
@@ -65,7 +64,7 @@ function updateScoreBoard(ctx) {
   ctx.fillStyle = "white";
   ctx.beginPath();
   ctx.textAlign = "center";
-  ctx.fillText("Score: " + score, ctx.canvas.width-70, ctx.canvas.height-20);
+  ctx.fillText("Score: " + g_score, ctx.canvas.width-70, ctx.canvas.height-20);
   ctx.closePath();
 }
 
@@ -83,23 +82,25 @@ function updateVictory(){
     ctx.closePath;
   }
 }
-function GameOver(ctx){
-  if(g_lost){
-    ctx.font = "Bold 20px Arial";
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.textAlign = "center";
-    ctx.fillText("Game Over!",ctx.canvas.width-300, ctx.canvas.height-300);
-    ctx.fillText("Press Y to continue",ctx.canvas.width-300, ctx.canvas.height-280);
-    ctx.closePath;
-  }
-}
+
+
 
 // ====================
 // GAME OVER
 // ====================
-//function updateGameOver() {
-	//if (g_gameOver) {
+function updateGameOver() {
+	if (g_gameOver) {
+		ctx.font = "Bold 20px Arial";
+		ctx.fillStyle = "white";
+		ctx.beginPath();
+		ctx.textAlign = "center";
+		ctx.fillText("GAME OVER",ctx.canvas.width-300, ctx.canvas.height-300);
+		var yourScore = "Your score was: " + g_score;
+		ctx.fillText(yourScore, ctx.canvas.width / 2, ctx.canvas.height-280);
+		ctx.fillText("Press Y to start a new game",ctx.canvas.width-300, ctx.canvas.height-260);
+		ctx.closePath;
+	}
+}
 
 
 // ====================
@@ -167,7 +168,7 @@ function updateSimulation(du) {
 
 // GAME-SPECIFIC DIAGNOSTICS
 var g_victory = false;
-var g_lost = false;
+var g_gameOver = false;
 var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
@@ -177,14 +178,19 @@ var g_enemyShip_goLeft = true;
 var g_enemyShip_goRight = false;
 var g_enemyShip_no = 0;
 
+var g_score = 0;
 var g_score_enemies = 10;
 var g_score_enemyship = 100;
+var g_score_enemyship2 = 200;
+var g_score_enemyship3 = 300;
 
-var KEY_MIXED   = keyCode('M');;
+var g_level = 0;
+
+var KEY_MIXED   = keyCode('M');
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
-var KEY_YES     = keyCode('Y')
+var KEY_YES     = keyCode('Y');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -209,15 +215,25 @@ function processDiagnostics() {
 
     if (eatKey(KEY_HALT)) entityManager.haltShips();
 
-    if (eatKey(KEY_YES) && g_victory) {
-        entityManager._generateRocks();
-        g_victory = false;
+    if (eatKey(KEY_YES)) {
+		if (g_victory) {
+			g_level++;
+			entityManager.resetGame();
+			g_victory = false;
+		}
+
+		if(g_gameOver) {
+			g_score = 0;
+			g_enemyShip_no = 0;
+			entityManager.resetGame();
+			g_gameOver = false;
+		}
     }
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
 
-    if (eatKey(KEY_0)) entityManager.toggleRocks();
-    if (eatKey(KEY_L)) entityManager.generateRock({
+    if (eatKey(KEY_0)) entityManager.toggleAliens();
+    if (eatKey(KEY_L)) entityManager.generateAlien({
         sprite: g_sprites.alien
     });
     if (eatKey(KEY_1)) entityManager.generateShip({
@@ -257,7 +273,7 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
     updateScoreBoard(ctx);
     updateVictory(ctx);
-    GameOver(ctx);
+    updateGameOver(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 
 
@@ -273,14 +289,17 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        ship   : "images/spaceship.png",
-        ship2  : "images/spaceship.png",
-        alien  : "images/alien.png",
+    ship   : "images/spaceship.png",
+    alien  : "images/alien.png",
 		alien2 : "images/alien2.png",
 		alien3 : "images/alien3.png",
 		enemyship : "images/enemyship1.png",
-        enemyship2 : "images/enemyship2.png",
-        enemyship3 : "images/enemyship3.png"
+    enemyship2 : "images/enemyship2.png",
+    enemyship3 : "images/enemyship3.png",
+    enemybullet : "images/alienShoot.png",
+    spreadbullet : "images/spread.png",
+    sniperbullet : "images/sniper.png"
+
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -291,7 +310,6 @@ var g_sprites = {};
 function preloadDone() {
 
     g_sprites.ship  = new Sprite(g_images.ship);
-    g_sprites.ship2 = new Sprite(g_images.ship2);
     g_sprites.alien  = new Sprite(g_images.alien);
 	g_sprites.alien2 = new Sprite(g_images.alien2);
 	g_sprites.alien3 = new Sprite(g_images.alien3);
@@ -300,6 +318,12 @@ function preloadDone() {
     g_sprites.enemyship3 = new Sprite(g_images.enemyship3);
     g_sprites.bullet = new Sprite(g_images.ship);
     g_sprites.bullet.scale = 0.25;
+    g_sprites.enemybullet = new Sprite(g_images.enemybullet);
+    g_sprites.enemybullet.scale = 0.5;
+    g_sprites.spreadbullet = new Sprite(g_images.spreadbullet);
+    g_sprites.spreadbullet.scale = 0.6;
+    g_sprites.sniperbullet = new Sprite(g_images.sniperbullet);
+    g_sprites.sniperbullet.scale = 0.8;
 
     entityManager.init();
     createInitialShips();
