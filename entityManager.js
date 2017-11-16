@@ -91,7 +91,7 @@ _generateWalls : function() {
   var i,
       NUM_ROWS = 3,
   NUM_COLUMNS = 3,
-  initialCX = 15,
+  initialCX = 57,
   initialCY = 400,
   xInterval = 30,
   yInterval = 20;
@@ -184,7 +184,7 @@ ALIEN_TURN_MIN : 20,
 //
 deferredSetup : function () {
 
-    this._categories = [this._rocks, this._bullets, this._ships, this._alienbullets, this._walls, this._Lives];
+    this._categories = [this._aliens, this._bullets, this._ships, this._alienbullets, this._walls, this._Lives];
 
 },
 
