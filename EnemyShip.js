@@ -68,6 +68,9 @@ EnemyShip.prototype.getRadius = function () {
 
 EnemyShip.prototype.reset = function(){
     g_enemyShip_no = 0;
+    this.reset_cx = this.cx;
+    this.reset_cy = this.cy;
+    this.reset_rotation = this.rotation;
 };
 
 
@@ -76,6 +79,14 @@ EnemyShip.prototype.reset = function(){
 //  "sounds/rockSplit.ogg");
 EnemyShip.prototype.killSound = new Audio(
     "sounds/laserSound.ogg");
+
+
+
+EnemyShip.prototype.whatEnemyShipAmI = function () {
+    if (this.sprite === g_sprites.enemyship2) return 3;
+    else if (this.sprite === g_sprites.enemyship3) return 2;
+    else return 1;
+};
 
 
 EnemyShip.prototype.takeBulletHit = function(){
