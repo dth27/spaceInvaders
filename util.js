@@ -107,11 +107,13 @@ fillBox: function (ctx, x, y, w, h, style) {
 //Draw a line by giving the coordinates for the beginning point and ending point of the line,
 //along with the desired line width and style.
 strokeLine: function (ctx, x_begin, y_begin, x_end, y_end, line_Width, style) {
+    ctx.beginPath();
     ctx.lineWidth = line_Width;
     ctx.fillStyle = style;
-    ctx.beginPath();
+    ctx.strokeStyle = "yellow";
     ctx.moveTo(x_begin,y_begin);
     ctx.lineTo(x_end,y_end);
+    ctx.fill();
     ctx.stroke();
     ctx.closePath();
 }

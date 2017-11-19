@@ -282,6 +282,7 @@ var g_sprites = {};
 
 function preloadDone() {
 
+    g_sprites.lives = new Sprite(g_images.ship);
     g_sprites.ship  = new Sprite(g_images.ship);
     g_sprites.alien  = new Sprite(g_images.alien);
 	g_sprites.alien2 = new Sprite(g_images.alien2);
