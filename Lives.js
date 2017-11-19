@@ -11,7 +11,6 @@ Lives.prototype = new Entity();
 Lives.prototype.rememberResets = function(){
   this.reset_cx = this.cx;
   this.reset_cy = this.cy;
-  //g_lives = 3;
 };
 
 Lives.prototype.width = 20;
