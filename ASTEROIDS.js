@@ -195,7 +195,7 @@ var KEY_YES     = keyCode('Y');
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
 
-var KEY_K = keyCode('K');
+
 function processDiagnostics() {
 
     if (eatKey(KEY_MIXED))
@@ -226,8 +226,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
 
-    if (eatKey(KEY_K)) entityManager.killNearestShip(
-        g_mouseX, g_mouseY);
+  
 }
 
 
