@@ -195,7 +195,6 @@ var KEY_YES     = keyCode('Y');
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
 
-var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_K = keyCode('K');
@@ -228,12 +227,6 @@ function processDiagnostics() {
     }
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
-
-    if (eatKey(KEY_1)) entityManager.generateShip({
-        cx : g_mouseX,
-        cy : g_mouseY,
-
-        sprite : g_sprites.ship});
 
     if (eatKey(KEY_2)) entityManager.generateShip({
         cx : g_mouseX,
