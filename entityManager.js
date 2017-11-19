@@ -200,10 +200,7 @@ deferredSetup : function () {
 
 init: function() {
     this._generateAliens();
-
-    this.generateEnemyShip({
-        sprite: g_sprites.enemyship
-    });
+    this._generateEnemyShip();
 
     //this._generateShip();
     this._generateWalls();

@@ -107,7 +107,7 @@ writeText: function(ctx, x, y, style, text, value) {
     ctx.font = "Bold 20px Arial";
     ctx.fillStyle = style;
     ctx.beginPath();
-    //ctx.textAlign = "center";
+    ctx.textAlign = "center";
     ctx.fillText(text + " " + value, x, y);
     ctx.closePath();
 },
