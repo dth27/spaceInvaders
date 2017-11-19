@@ -38,7 +38,7 @@ function render(ctx) {
     if (g_doBox) util.fillBox(ctx, 200, 200, 50, 50, "red");
     
     //The defence line at the bottom
-    util.strokeLine(ctx, 10, 530, 590, 530, 4, "blue");
+    util.strokeLine(ctx, 10, 530, 590, 530, 4, "yellow");
 
     // The core rendering of the actual game / simulation
     if (g_doRender) renderSimulation(ctx);

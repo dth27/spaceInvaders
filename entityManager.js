@@ -91,7 +91,7 @@ _generateWalls : function() {
   var i,
       NUM_ROWS = 3,
   NUM_COLUMNS = 3,
-  initialCX = 15,
+  initialCX = 57,
   initialCY = 400,
   xInterval = 30,
   yInterval = 20;
@@ -165,14 +165,6 @@ _forEachOf: function(aCategory, fn) {
 _turnAliensAround: function() {
 	this._forEachOf(this._aliens, Alien.prototype.turnAround);
 	this._turnAliensNext = false;
-},
-
-// Tell all aliens to crank up the speed
-_accelAliens: function(accelLevel) {
-	var speedModifier = 1 + (accelLevel / _accelHowOften);
-	for (var i = 0; i < this._aliens.length; i++) {
-		this._aliens[i].setSpeedModifier(speedModifier);
-	}
 },
 
 // PUBLIC METHODS
@@ -339,7 +331,7 @@ turnAliensNextUpdate: function() {
 	this._turnAliensNext = true;
 },
 
-_accelAliens: function(accelLevel) {
+accelAliens: function(accelLevel) {
 	var speedModifier = 1 + (accelLevel / this._accelHowOften);
 	for (var i = 0; i < this._aliens.length; i++) {
 		this._aliens[i].setSpeedModifier(speedModifier);
@@ -375,7 +367,7 @@ update: function(du) {
 	// Check whether you need to speed up the aliens.
 	var maybeAccel = Math.ceil(this._aliens.length / this._accelWhen);
 	if (maybeAccel <= 4 && maybeAccel < this._lastAccel) {
-		this._accelAliens(this._accelHowOften - maybeAccel);
+		this.accelAliens(this._accelHowOften - maybeAccel);
 		this._lastAccel = maybeAccel;
 	}
 

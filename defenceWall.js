@@ -11,22 +11,23 @@ defenceWall.prototype.rememberResets = function(){
   this.reset_cx = this.cx;
   this.reset_cy = this.cy;
 };
-var rows = 3;
-var columns = 4;
 defenceWall.prototype.width = 25;
 defenceWall.prototype.height = 10;
 defenceWall.prototype.lifeSpann = 2;
-var alpha = 1;
+defenceWall.prototype.alpha = 1;
 
 defenceWall.prototype.drawWall = function(ctx, cx, cy) {
-            ctx.beginPath();
+			ctx.save();
+			ctx.beginPath();
+			ctx.globalAlpha = this.alpha;
             ctx.lineWidth = 1;
             ctx.strokeStyle = "blue";
             ctx.fillStyle = "blue";
-            ctx.rect(cx, cy, this.width, this.height);
+            ctx.rect(cx - (this.width / 2), cy - (this.height) / 2, this.width, this.height);
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
+			ctx.restore();
 
 };
 defenceWall.prototype.getRadius = function () {
@@ -40,18 +41,16 @@ defenceWall.prototype.takeBulletHit = function(){
 
 };
 defenceWall.prototype.fadeAway = function(){
-  this.lifeSpann--;
   if (this.lifeSpann==1){
-    alpha = 0.5;
+    this.alpha = 0.5;
   }
   if (this.lifeSpann==2){
-    alpha = 0.75;
+    this.alpha = 0.75;
   }
+  this.lifeSpann--;
 }
 defenceWall.prototype.render = function(ctx){
-
     this.drawWall(ctx, this.cx, this.cy);
-    ctx.globalAlpha = alpha;
 };
 defenceWall.prototype.update = function (){
     spatialManager.unregister(this);

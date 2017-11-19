@@ -53,7 +53,7 @@ Alien.prototype.update = function (du) {
 
 	if(this._isDeadNow) return entityManager.KILL_ME_NOW;
 
-	if(this.cy > 500) {
+	if(this.cy > 530 - (this.sprite.height / 2)) {
 		g_gameOver = true;
 		return;
 	}
