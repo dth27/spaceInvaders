@@ -67,8 +67,7 @@ EnemyShip.prototype.getRadius = function () {
 
 
 EnemyShip.prototype.reset = function(){
-    this.setPos(this.reset_cx, this.reset_cy);
-    this.rotation = this.reset_rotation;
+    g_enemyShip_no = 0;
 };
 
 

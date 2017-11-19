@@ -209,13 +209,18 @@ function processDiagnostics() {
     if (eatKey(KEY_YES)) {
 		if (g_victory) {
 			g_level++;
+			console.log("g_enemyShip_no við victory: " + g_enemyShip_no);
+			g_enemyShip_no = 0;
+            console.log("g_enemyShip_no, eftir reset: " + g_enemyShip_no);
 			entityManager.resetGame();
 			g_victory = false;
 		}
 
-		if(g_gameOver) {
+		else if(g_gameOver) {
 			g_score = 0;
+            console.log("g_enemyShip_no við gameOver: " + g_enemyShip_no);
 			g_enemyShip_no = 0;
+            console.log("g_enemyShip_no eftir gameOver: " + g_enemyShip_no);
 			entityManager.resetGame();
 			g_gameOver = false;
 		}
