@@ -195,13 +195,10 @@ var KEY_YES     = keyCode('Y');
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
 
-var KEY_0 = keyCode('0');
-
 var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_K = keyCode('K');
-//var KEY_L = keyCode('L');
 function processDiagnostics() {
 
     if (eatKey(KEY_MIXED))
@@ -232,10 +229,6 @@ function processDiagnostics() {
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
 
-    if (eatKey(KEY_0)) entityManager.toggleAliens();
-    //if (eatKey(KEY_L)) entityManager.generateAlien({
-    //    sprite: g_sprites.alien
-    //});
     if (eatKey(KEY_1)) entityManager.generateShip({
         cx : g_mouseX,
         cy : g_mouseY,
