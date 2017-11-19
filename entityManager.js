@@ -22,7 +22,6 @@ with suitable 'data' and 'methods'.
 //
 /*jslint nomen: true, white: true, plusplus: true*/
 
-
 var entityManager = {
 
 // "PRIVATE" DATA
@@ -42,7 +41,6 @@ _turnAliensNext : false,
 _accelWhen : 12,
 _accelHowOften : 5,
 _lastAccel : 5,
-
 // "PRIVATE" METHODS
 
 _generateAliens : function() {
@@ -286,6 +284,10 @@ resetShips: function() {
     this._forEachOf(this._ships, SpaceShip.prototype.reset);
 },
 
+resetLives: function(){
+    this._forEachOf(this._Lives, Lives.prototype.reset);
+},
+
 haltShips: function() {
     this._forEachOf(this._ships, SpaceShip.prototype.halt);
 },
@@ -296,8 +298,10 @@ resetGame: function() {
 	if(this._alienbullets.length > 0) this.removeAlienBullets();
 	this._generateAliens();
 	this._generateWalls();
+  this._generateLives();
 	this._lastAccel = 5;
 	this.resetShips();
+  //this.resetLives();
 },
 
 removeAliens: function() {

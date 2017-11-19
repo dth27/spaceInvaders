@@ -32,7 +32,7 @@ SpaceShip.prototype.velX = 0;
 SpaceShip.prototype.velY = 0;
 SpaceShip.prototype.launchVel = 2;
 SpaceShip.prototype.friendOrFoe = false;
-SpaceShip.prototype.lifeSpann = 3;
+//SpaceShip.prototype.lifeSpann = 3;
 
 
 SpaceShip.prototype.update = function() {
@@ -96,17 +96,14 @@ SpaceShip.prototype.reset = function(){
 };
 
 SpaceShip.prototype.takeBulletHit = function(){
-  if (this.lifeSpann == 0){
-    g_gameOver = true;
-  this.reset();
-
-}
-  else {
-    this.lifeSpann--;
+  if (entityManager._Lives.length>0){
     entityManager._Lives[0]._isDeadNow = true;
-    console.log(entityManager._Lives[0]);
+
   }
-  //g_gameOver = false;
+  else{
+  g_gameOver = true;
+  this.reset();
+  }
 };
 
 SpaceShip.prototype.render = function(ctx){
