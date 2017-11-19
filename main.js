@@ -60,11 +60,7 @@ main._updateClocks = function (frameTime) {
 main._iterCore = function (dt) {
 
     // Handle QUIT
-    if (requestedQuit()) {
-        this.gameOver();
-        return;
-    }
-
+  
     gatherInputs();
     update(dt);
     render(g_ctx);
@@ -77,12 +73,6 @@ main.gameOver = function () {
     console.log("gameOver: quitting...");
 };
 
-// Simple voluntary quit mechanism
-//
-var KEY_QUIT = 'Q'.charCodeAt(0);
-function requestedQuit() {
-    return keys[KEY_QUIT];
-}
 
 // Annoying shim for Firefox and Safari
 window.requestAnimationFrame =
@@ -129,6 +119,6 @@ main.init = function () {
     // so let's use a fillStyle which works against that...
     //
     g_ctx.fillStyle = "white";
-    
+
     this._requestNextIteration();
 };
