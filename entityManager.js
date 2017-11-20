@@ -271,10 +271,11 @@ resetGame: function() {
 	if(this._bullets.length > 0) this.removeBullets();
 	if(this._alienbullets.length > 0) this.removeAlienBullets();
     if(this._enemyShips.length > 0) this.removeEnemyShips();
+	if(this._Lives.length > 0) this.removeLives();
     this._generateEnemyShip();
 	this._generateAliens();
 	this._generateWalls();
-  this._generateLives();
+	this._generateLives();
 	this._lastAccel = 5;
 	this.resetShips();
   //this.resetLives();
@@ -308,6 +309,13 @@ removeEnemyShips: function() {
     this._enemyShips.splice(0, this._enemyShips.length);
 },
 
+removeLives: function() {
+	for (var i = 0; i < this._Lives.length; i++) {
+		spatialManager.unregister(this._Lives[i]);
+	}
+	this._Lives.splice(0, this._Lives.length);
+},
+	
 toggleAliens: function() {
     this._bShowAliens = !this._bShowAliens;
 },

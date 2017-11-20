@@ -95,12 +95,12 @@ Alien.prototype.update = function (du) {
 		if (this._column === 0) {
 			this._column = 1;
 			this.untilNextStance = (this.SWITCH_STANCE - Math.random() * 8) 
-								   * this._speedModifier * (1 + levelToSpeed);
+								   / (this._speedModifier * (1 + levelToSpeed));
 		}
 		else {
 			this._column = 0;
 			this.untilNextStance = (this.SWITCH_STANCE + Math.random() * 8) 
-								   * this._speedModifier * (1 + levelToSpeed);
+								   / (this._speedModifier * (1 + levelToSpeed));
 		}
 	}
 	
