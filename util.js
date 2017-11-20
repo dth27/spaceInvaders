@@ -104,9 +104,9 @@ fillBox: function (ctx, x, y, w, h, style) {
 },
 
 writeText: function(ctx, x, y, style, text, value) {
+    ctx.beginPath();
     ctx.font = "Bold 20px Arial";
     ctx.fillStyle = style;
-    ctx.beginPath();
     ctx.textAlign = "center";
     ctx.fillText(text + " " + value, x, y);
     ctx.closePath();

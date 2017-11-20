@@ -98,13 +98,16 @@ EnemyShip.prototype.takeBulletHit = function(){
 
     //update score
     if(g_enemyShip_no == 0) {
-        g_score += g_score_enemyship;
+        //update scoreboard with the scores that the first enemyship gives
+        g_score += g_score_enemyships[0]
     }
     else if(g_enemyShip_no == 1) {
-        g_score += g_score_enemyship2;
+        //update scoreboard with the scores that the second enemyship gives
+        g_score += g_score_enemyships[1]
     }
     else {
-        g_score += g_score_enemyship3;
+        //update scoreboard with the scores that the third enemyship gives
+        g_score += g_score_enemyships[2]
     }
 
 
