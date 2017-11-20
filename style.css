@@ -9,7 +9,7 @@ canvas{
 body {
 
   font-size: 16px;
-
+  font-family:  monospace;
   background-size: cover;
 }
 h1,h2,h3{
@@ -24,11 +24,42 @@ p{
   padding-right: 4rem;
   font-family:  monospace;
 }
-.mainContainer{
-  display: flex;
 
-
+a {
+    color: white;
+    font-family:  monospace;
+    text-decoration: none;
+    padding-left: 4rem;
+    padding-right: 4rem;
 }
+
+a:hover {
+    font-size: 12pt;
+    color: yellow;
+    font-family:  monospace;
+}
+
+.mainContainer {
+    display: flex;
+}
+
+.bottomContainer {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+
+.authors {
+    font-size: 12pt;
+    align-self: flex-start;
+}
+
+.imageSource {
+    font-size: 12pt;
+    align-self: flex-start;
+}
+
 #starfield {
     width:100%;
     height:100%;
@@ -40,7 +71,4 @@ p{
 .instructions{
   border: 1px solid white;
 }
-a{
-  color: white;
- text-decoration: none;
-}
+
