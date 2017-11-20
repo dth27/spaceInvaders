@@ -269,9 +269,9 @@ function requestPreloads() {
     var requiredImages = {
     ship   : "images/spaceship.png",
     alien  : "images/alien.png",
-		alien2 : "images/alien2.png",
-		alien3 : "images/alien3.png",
-		enemyship : "images/enemyship1.png",
+	alien2 : "images/alien2.png",
+	alien3 : "images/alien3.png",
+	enemyship : "images/enemyship1.png",
     enemyship2 : "images/enemyship2.png",
     enemyship3 : "images/enemyship3.png",
     enemybullet : "images/alienShoot.png",
@@ -289,9 +289,22 @@ function preloadDone() {
 
     g_sprites.lives = new Sprite(g_images.ship);
     g_sprites.ship  = new Sprite(g_images.ship);
-    g_sprites.alien  = new Sprite(g_images.alien);
-	g_sprites.alien2 = new Sprite(g_images.alien2);
-	g_sprites.alien3 = new Sprite(g_images.alien3);
+	
+    g_sprites.alien  = new Sprite(g_images.alien, {
+	width : 30,
+	height : 20,
+	spriteSheet : true});
+	
+	g_sprites.alien2 = new Sprite(g_images.alien2, {
+	width : 25,
+	height : 20,
+	spriteSheet : true});
+	
+	g_sprites.alien3 = new Sprite(g_images.alien3, {
+	width : 20,
+	height : 20,
+	spriteSheet : true});
+	
     g_sprites.enemyship = new Sprite(g_images.enemyship);
     g_sprites.enemyship2 = new Sprite(g_images.enemyship2);
     g_sprites.enemyship3 = new Sprite(g_images.enemyship3);

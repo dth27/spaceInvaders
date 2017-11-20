@@ -14,20 +14,33 @@
 
 // Construct a "sprite" from the given `image`,
 //
-function Sprite(image) {
+function Sprite(image, descr) {
+	if(descr) this.setup(descr);
     this.image = image;
-
-    this.width = image.width;
-    this.height = image.height;
+	this.spriteSheet = this.spriteSheet || false;
+	
+    this.width = this.width || image.width;
+    this.height = this.height || image.height;
     this.scale = 1;
 }
+
+
+Sprite.prototype.setup = function (descr) {
+	
+    // Apply all setup properies from the (optional) descriptor
+    for (var property in descr) {
+        this[property] = descr[property];
+    }
+};
 
 Sprite.prototype.drawAt = function (ctx, x, y) {
     ctx.drawImage(this.image,
                   x, y);
 };
 
-Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
+Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation, row, col) {
+	if (row === undefined) row = 0;
+	if (col === undefined) col = 0;
     if (rotation === undefined) rotation = 0;
 
     var w = this.width,
@@ -40,9 +53,18 @@ Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
 
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
-    ctx.drawImage(this.image,
-                  -w/2, -h/2);
-
+	// if it's a spriteSheet, choose the appropriate image as per given selection
+	if(this.spriteSheet) {
+		ctx.drawImage(this.image, 
+					  col*w, row*h,
+					  w, h,
+					  -w/2, -h/2,
+					  w, h);
+	}
+	else {
+		ctx.drawImage(this.image,
+					  -w/2, -h/2);
+	}
     ctx.restore();
 };
 

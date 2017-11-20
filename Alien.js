@@ -24,6 +24,15 @@ function Alien(descr) {
 	this._turnAroundNext = false;
 
 	this._speedModifier = 1;
+	
+	// Which part of the spritesheet to use
+	this._row = 0;
+	this._column = 0;
+	
+	// The general delay between switching stances and the time until the next switch,
+	// Initialized with a slight random adjustment.
+	this.SWITCH_STANCE = 50;
+	this.untilNextStance = 50 + Math.random() * 8;
 
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.alien;
@@ -52,18 +61,21 @@ Alien.prototype.update = function (du) {
 	this.fireAlienBullet();
 
 	if(this._isDeadNow) return entityManager.KILL_ME_NOW;
-
+	
 	if(this.cy > 530 - (this.sprite.height / 2)) {
 		g_gameOver = true;
 		return;
 	}
-
+	
+	// Amount moved is based on the current level, and speed modifier.
 	var levelToSpeed = g_level / 5;
 	if(this._turnAroundNext) {
 		this.velX = -this.velX;
 		this.cx += (this.velX + (levelToSpeed * this.velX)) * this._speedModifier * du;
 		this.cy += 5;
 		this._turnAroundNext = false;
+		if(this._row === 1) this._row = 0;
+		else this._row = 1;
 	}
 	else {
 		this.cx += (this.velX + (levelToSpeed * this.velX)) * this._speedModifier * du;
@@ -72,7 +84,26 @@ Alien.prototype.update = function (du) {
 			entityManager.turnAliensNextUpdate();
 		}
 	}
-
+	
+	// Updates the time until the next stance, switches if appropriate
+	// Updates the next interval if it switches stances, with slight random value
+	// added or substracted, so they mostly don't go completely out of synch.
+	// Use speed-related modifiers to adjust stance switching as well.
+	
+	this.untilNextStance -= du; 
+	if(this.untilNextStance < 0) {
+		if (this._column === 0) {
+			this._column = 1;
+			this.untilNextStance = (this.SWITCH_STANCE - Math.random() * 8) 
+								   * this._speedModifier * (1 + levelToSpeed);
+		}
+		else {
+			this._column = 0;
+			this.untilNextStance = (this.SWITCH_STANCE + Math.random() * 8) 
+								   * this._speedModifier * (1 + levelToSpeed);
+		}
+	}
+	
 	// (Re-)Register
 
 	spatialManager.register(this);
@@ -133,8 +164,8 @@ Alien.prototype.whatAlienAmI = function () {
 };
 
 Alien.prototype.render = function (ctx) {
-    this.sprite.drawWrappedCentredAt(
-        ctx, this.cx, this.cy, 0
+    this.sprite.drawCentredAt(
+        ctx, this.cx, this.cy, 0, this._row, this._column
     );
 };
 

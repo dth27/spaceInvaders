@@ -65,7 +65,8 @@ _generateAliens : function() {
 		alien3Boundary -= 1;
 		alien2Boundary += 1;
 	}
-
+	
+	// Where the aliens are initialized based on the above parameters
 	for (i = 0; i < NUM_ROWS; ++i) {
 		for (var j = 0; j < NUM_COLUMNS; j++) {
 			var nextCX = initialCX + (xInterval * j);
@@ -125,32 +126,6 @@ _generateLives : function() {
       cy : g_canvas.height-20
     });
   }
-},
-
-_findNearestShip : function(posX, posY) {
-    var closestShip = null,
-        closestIndex = -1,
-        closestSq = 1000 * 1000;
-
-    for (var i = 0; i < this._ships.length; ++i) {
-
-        var thisShip = this._ships[i];
-        var shipPos = thisShip.getPos();
-        var distSq = util.wrappedDistSq(
-            shipPos.posX, shipPos.posY,
-            posX, posY,
-            g_canvas.width, g_canvas.height);
-
-        if (distSq < closestSq) {
-            closestShip = thisShip;
-            closestIndex = i;
-            closestSq = distSq;
-        }
-    }
-    return {
-        theShip : closestShip,
-        theIndex: closestIndex
-    };
 },
 
 _forEachOf: function(aCategory, fn) {
@@ -264,20 +239,6 @@ generateWalls : function(descr) {
 
 generateLives : function(descr) {
       this._Lives.push(new Lives(descr));
-},
-
-killNearestShip : function(xPos, yPos) {
-    var theShip = this._findNearestShip(xPos, yPos).theShip;
-    if (theShip) {
-        theShip.kill();
-    }
-},
-
-yoinkNearestShip : function(xPos, yPos) {
-    var theShip = this._findNearestShip(xPos, yPos).theShip;
-    if (theShip) {
-        theShip.setPos(xPos, yPos);
-    }
 },
 
 resetShips: function() {
