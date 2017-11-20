@@ -68,6 +68,9 @@ EnemyShip.prototype.getRadius = function () {
 
 EnemyShip.prototype.reset = function(){
     g_enemyShip_no = 0;
+    this.reset_cx = this.cx;
+    this.reset_cy = this.cy;
+    this.reset_rotation = this.rotation;
 };
 
 
@@ -76,6 +79,14 @@ EnemyShip.prototype.reset = function(){
 //  "sounds/rockSplit.ogg");
 EnemyShip.prototype.killSound = new Audio(
     "sounds/laserSound.ogg");
+
+
+
+EnemyShip.prototype.whatEnemyShipAmI = function () {
+    if (this.sprite === g_sprites.enemyship2) return 3;
+    else if (this.sprite === g_sprites.enemyship3) return 2;
+    else return 1;
+};
 
 
 EnemyShip.prototype.takeBulletHit = function(){
@@ -87,13 +98,16 @@ EnemyShip.prototype.takeBulletHit = function(){
 
     //update score
     if(g_enemyShip_no == 0) {
-        g_score += g_score_enemyship;
+        //update scoreboard with the scores that the first enemyship gives
+        g_score += g_score_enemyships[0]
     }
     else if(g_enemyShip_no == 1) {
-        g_score += g_score_enemyship2;
+        //update scoreboard with the scores that the second enemyship gives
+        g_score += g_score_enemyships[1]
     }
     else {
-        g_score += g_score_enemyship3;
+        //update scoreboard with the scores that the third enemyship gives
+        g_score += g_score_enemyships[2]
     }
 
 

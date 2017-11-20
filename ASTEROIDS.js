@@ -69,6 +69,14 @@ function updateScoreBoard(ctx) {
 }
 
 // ====================
+// Levels
+// ====================
+
+function updateLevelBoard(ctx) {
+  util.writeText(ctx, canvas.width/2, canvas.height-20, "red", "Level ", g_level+1);
+}
+
+// ====================
 // Victory & GameOver
 // ====================
 function updateVictory(){
@@ -180,9 +188,7 @@ var g_enemyShip_no = 0;
 
 var g_score = 0;
 var g_score_enemies = 10;
-var g_score_enemyship = 100;
-var g_score_enemyship2 = 200;
-var g_score_enemyship3 = 300;
+var g_score_enemyships = [100, 200, 300];
 
 var g_level = 0;
 
@@ -209,18 +215,15 @@ function processDiagnostics() {
     if (eatKey(KEY_YES)) {
 		if (g_victory) {
 			g_level++;
-			console.log("g_enemyShip_no við victory: " + g_enemyShip_no);
 			g_enemyShip_no = 0;
-            console.log("g_enemyShip_no, eftir reset: " + g_enemyShip_no);
 			entityManager.resetGame();
 			g_victory = false;
 		}
 
 		else if(g_gameOver) {
 			g_score = 0;
-            console.log("g_enemyShip_no við gameOver: " + g_enemyShip_no);
+			g_level = 0;
 			g_enemyShip_no = 0;
-            console.log("g_enemyShip_no eftir gameOver: " + g_enemyShip_no);
 			entityManager.resetGame();
 			g_gameOver = false;
 		}
@@ -250,6 +253,7 @@ function renderSimulation(ctx) {
 
     entityManager.render(ctx);
     updateScoreBoard(ctx);
+    updateLevelBoard(ctx);
     updateVictory(ctx);
     updateGameOver(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);

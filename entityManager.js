@@ -29,6 +29,7 @@ var entityManager = {
 _aliens   : [],
 _bullets : [],
 _ships   : [],
+_enemyShips : [],
 _alienbullets : [],
 _walls   : [],
 _Lives   : [],
@@ -114,6 +115,17 @@ _generateWalls : function() {
 }
 },
 
+
+_generateEnemyShip : function() {
+    var enemyShips = [g_sprites.enemyship, g_sprites.enemyship3, g_sprites.enemyship2];
+    entityManager.generateEnemyShip({
+        cx : 1200,
+        cy : 50,
+
+        sprite: enemyShips[g_enemyShip_no]
+    });
+},
+
 _generateLives : function() {
   var i,
   NUM_LIVES = 3,
@@ -157,16 +169,13 @@ ALIEN_TURN_MIN : 20,
 //
 deferredSetup : function () {
 
-    this._categories = [this._aliens, this._bullets, this._ships, this._alienbullets, this._walls, this._Lives];
+    this._categories = [this._aliens, this._bullets, this._ships, this._enemyShips, this._alienbullets, this._walls, this._Lives];
 
 },
 
 init: function() {
     this._generateAliens();
-
-    this.generateEnemyShip({
-        sprite: g_sprites.enemyship
-    });
+    this._generateEnemyShip();
 
     //this._generateShip();
     this._generateWalls();
@@ -226,7 +235,7 @@ generateAlien : function(descr) {
 },
 
 generateEnemyShip: function(descr) {
-    this._ships.push(new EnemyShip(descr));
+    this._enemyShips.push(new EnemyShip(descr));
 },
 
 generateShip : function(descr) {
@@ -245,6 +254,10 @@ resetShips: function() {
     this._forEachOf(this._ships, SpaceShip.prototype.reset);
 },
 
+resetEnemyShips: function() {
+    this._forEachOf(this._enemyShips, EnemyShip.prototype.reset);
+},
+
 resetLives: function(){
     this._forEachOf(this._Lives, Lives.prototype.reset);
 },
@@ -257,6 +270,8 @@ resetGame: function() {
 	if(this._aliens.length > 0) this.removeAliens();
 	if(this._bullets.length > 0) this.removeBullets();
 	if(this._alienbullets.length > 0) this.removeAlienBullets();
+    if(this._enemyShips.length > 0) this.removeEnemyShips();
+    this._generateEnemyShip();
 	this._generateAliens();
 	this._generateWalls();
   this._generateLives();
@@ -284,6 +299,13 @@ removeAlienBullets: function() {
 		spatialManager.unregister(this._alienbullets[i]);
 	}
 	this._alienbullets.splice(0, this._alienbullets.length);
+},
+
+removeEnemyShips: function() {
+    for (var i = 0; i < this._enemyShips.length; i++) {
+        spatialManager.unregister(this._enemyShips[i]);
+    }
+    this._enemyShips.splice(0, this._enemyShips.length);
 },
 
 toggleAliens: function() {

@@ -103,6 +103,14 @@ fillBox: function (ctx, x, y, w, h, style) {
     ctx.fillStyle = oldStyle;
 },
 
+writeText: function(ctx, x, y, style, text, value) {
+    ctx.beginPath();
+    ctx.font = "Bold 20px Arial";
+    ctx.fillStyle = style;
+    ctx.textAlign = "center";
+    ctx.fillText(text + " " + value, x, y);
+    ctx.closePath();
+},
 
 //Draw a line by giving the coordinates for the beginning point and ending point of the line,
 //along with the desired line width and style.
