@@ -48,9 +48,10 @@ starfield.start();
 // MUSIC
 // ====================
 
-var song = new Audio("sounds/game2.mp3");
-function playSong(){
-  //song.play();
+var song = new Audio("sounds/trancepluck.wav");
+
+function playSong(songs){
+  songs.play();
 }
 
 // ====================
@@ -81,6 +82,7 @@ function updateLevelBoard(ctx) {
 // ====================
 function updateVictory(){
   if (g_victory) {
+
     ctx.font = "Bold 20px Arial";
     ctx.fillStyle = "white";
     ctx.beginPath();
@@ -98,6 +100,7 @@ function updateVictory(){
 // ====================
 function updateGameOver() {
 	if (g_gameOver) {
+
 		ctx.font = "Bold 20px Arial";
 		ctx.fillStyle = "white";
 		ctx.beginPath();
@@ -169,7 +172,7 @@ function updateSimulation(du) {
     processDiagnostics();
 
     entityManager.update(du);
-    playSong();
+    playSong(song);
     // Prevent perpetual firing!
     eatKey(SpaceShip.prototype.KEY_FIRE);
 }
@@ -293,22 +296,22 @@ function preloadDone() {
 
     g_sprites.lives = new Sprite(g_images.ship);
     g_sprites.ship  = new Sprite(g_images.ship);
-	
+
     g_sprites.alien  = new Sprite(g_images.alien, {
 	width : 30,
 	height : 20,
 	spriteSheet : true});
-	
+
 	g_sprites.alien2 = new Sprite(g_images.alien2, {
 	width : 25,
 	height : 20,
 	spriteSheet : true});
-	
+
 	g_sprites.alien3 = new Sprite(g_images.alien3, {
 	width : 20,
 	height : 20,
 	spriteSheet : true});
-	
+
     g_sprites.enemyship = new Sprite(g_images.enemyship);
     g_sprites.enemyship2 = new Sprite(g_images.enemyship2);
     g_sprites.enemyship3 = new Sprite(g_images.enemyship3);
